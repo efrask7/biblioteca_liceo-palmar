@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -19,6 +19,20 @@ const createWindow = (): void => {
   });
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  ipcMain.handle("window-close", () => {
+    mainWindow.close()
+  })
+
+  ipcMain.handle("window-maximize", () => {
+    mainWindow.isMaximized()
+      ? mainWindow.unmaximize()
+      : mainWindow.maximize()
+  })
+
+  ipcMain.handle("window-minimize", () => {
+    mainWindow.minimize()
+  })
 };
 
 app.on('ready', createWindow);
