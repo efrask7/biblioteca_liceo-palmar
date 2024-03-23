@@ -13,6 +13,7 @@ const createWindow = (): void => {
     minWidth: 1280,
     minHeight: 720,
     resizable: true,
+    frame: false,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
@@ -32,6 +33,14 @@ const createWindow = (): void => {
 
   ipcMain.handle("window-minimize", () => {
     mainWindow.minimize()
+  })
+
+  mainWindow.on("maximize", () => {
+    mainWindow.webContents.send("window:resize", true)
+  })
+
+  mainWindow.on("unmaximize", () => {
+    mainWindow.webContents.send("window:resize", false)
   })
 };
 

@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import Logo from "../components/layout/Logo";
 import Title from "../components/layout/Title";
 import ActionsButtons from "../components/layout/ActionsButtons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarNav from "../components/layout/SidebarNav";
 import { VscGear } from "react-icons/vsc";
 import { Sidebar } from "flowbite-react";
@@ -12,15 +12,23 @@ export default function RootLayout() {
 
   const [windowMaximized, setWindowMaximized] = useState(false)
 
+  useEffect(() => {
+    window.windowAct.handleChange(setWindowMaximized)
+
+    return () => {
+      window.windowAct.closeHandleChange()
+    }
+  }, [setWindowMaximized])
+
   return (
     <div className="flex flex-col size-full">
       <header 
         className="bg-slate-800 h-10 flex justify-between items-center px-2"
-        onDoubleClick={() => {window.windowAct.maximize(); setWindowMaximized(prev => !prev)}}
+        onDoubleClick={() => window.windowAct.maximize()}
       >
         <Logo/>
         <Title/>
-        <ActionsButtons maximized={windowMaximized} setMaximized={setWindowMaximized}/>
+        <ActionsButtons maximized={windowMaximized} />
       </header>
 
       <main className="size-full grid grid-cols-[4rem_1fr]">

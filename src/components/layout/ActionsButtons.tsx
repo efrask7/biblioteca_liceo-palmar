@@ -33,17 +33,16 @@ function Btn({ children, action, func }: { children: ReactNode, action: TAction,
 
 interface IActionsButtons {
   maximized: boolean
-  setMaximized: Dispatch<SetStateAction<boolean>>
 }
 
-export default function ActionsButtons({ maximized, setMaximized }: IActionsButtons) {
+export default function ActionsButtons({ maximized }: IActionsButtons) {
   return (
-    <div className="flex h-full">
+    <div className="flex h-full no-drag" style={{pointerEvents:"all"}}>
       <Btn action="minimize">
         <MdOutlineHorizontalRule/>
       </Btn>
 
-      <Btn action="maximize" func={() => setMaximized(prev => !prev)}>
+      <Btn action="maximize">
         {
           maximized
             ? <VscChromeRestore/>
