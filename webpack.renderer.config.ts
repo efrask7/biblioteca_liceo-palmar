@@ -16,4 +16,9 @@ export const rendererConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
   },
+  externals: [
+    {
+      "./src/main/": "commonjs2 ./src/main/"
+    }
+  ]
 };

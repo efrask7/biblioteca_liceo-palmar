@@ -12,4 +12,9 @@ export const mainConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
+  node: {
+    __dirname: false,
+    __filename: false,
+    global: true
+  }
 };

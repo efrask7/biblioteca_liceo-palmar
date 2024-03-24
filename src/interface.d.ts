@@ -9,6 +9,9 @@ declare global {
       handleChange: (state: Dispatch<SetStateAction<boolean>>) => void
       closeHandleChange: () => void
     }
+    files: {
+      open: () => void
+    }
   }
 }
 

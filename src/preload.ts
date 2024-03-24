@@ -8,3 +8,7 @@ contextBridge.exposeInMainWorld("windowAct", {
   handleChange: (setState: Dispatch<SetStateAction<boolean>>) => ipcRenderer.on("window:resize", (_, data) => setState(data)),
   closeHandleChange: () => ipcRenderer.off("window:resize", null)
 })
+
+contextBridge.exposeInMainWorld("files", {
+  open: () => ipcRenderer.invoke("file:open")
+})

@@ -1,4 +1,5 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import readExcel from './main/lib/excel/readExcel';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -16,6 +17,8 @@ const createWindow = (): void => {
     frame: false,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true
     },
   });
   
@@ -41,6 +44,25 @@ const createWindow = (): void => {
 
   mainWindow.on("unmaximize", () => {
     mainWindow.webContents.send("window:resize", false)
+  })
+
+  ipcMain.handle("file:open", () => {
+    const file = dialog.showOpenDialogSync({
+      title: "Seleccionar Excel o SQL",
+      filters: [
+        { name: "Excel", extensions: ["xlsx", "xlsm", "xlsb"] },
+        { name: "Base de datos", extensions: ["db"] }
+      ],
+      properties: [
+        'openFile'
+      ]
+    })
+
+    console.log("Filed selected", file)
+
+    const filePath = file[0] as string
+
+    readExcel(filePath)
   })
 };
 
