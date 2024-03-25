@@ -21,5 +21,18 @@ export function fixExcelJson(excelJson: TExcelJson[]) {
 
   const excel = excelMapped.slice(2)
 
-  return excel
+  return excel as IBook[]
+}
+
+export function isJsonNull(json: IBook) {
+  const numberOfKeys = Object.keys(json)
+  let keysNull = 0
+
+  Object.values(json).forEach(val => {
+    if (!val || val.trim() == "") {
+      keysNull++
+    }
+  })
+
+  return keysNull === numberOfKeys.length
 }
