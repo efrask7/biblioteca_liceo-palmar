@@ -12,6 +12,22 @@
   -webkit-app-region: drag;
 }
 
-.no-drag {
-  /* -webkit-app-region: none; */
+.input-noborders {
+  border: unset !important;
+  outline: unset !important;
+}
+
+.input-noborders:focus {
+  border: unset !important;
+  outline: unset !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }

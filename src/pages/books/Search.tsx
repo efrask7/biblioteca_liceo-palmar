@@ -2,8 +2,12 @@ import { Button, TextInput } from "flowbite-react";
 import { useCallback, useEffect, useState } from "react";
 import { IBooksResult } from "../../interface";
 import TableBooks from "../../components/search/TableBooks";
+import SearchBar, { TSearch } from "../../components/search/SearchBar";
+import Pagination from "../../components/search/Pagination";
 
 export default function BooksSearch() {
+  
+  const [currentPage, setCurrentPage] = useState(1)
 
   const [searchParams, setSearchParams] = useState<IGetBooks["params"]>({
     limit: 10,
@@ -12,7 +16,19 @@ export default function BooksSearch() {
     orderBy: "id"
   }) 
 
+  useEffect(() => {
+    setSearchParams(prev => ({
+      ...prev,
+      offset: currentPage
+    }))
+  }, [currentPage])
+
   const [booksData, setBooksData] = useState<IBookDB[]>([])
+  const [booksPagination, setBooksPagination] = useState<IBooksResult["pagination"]>({
+    count: 0,
+    current: 0,
+    pages: 0
+  })
 
   useEffect(() => {
     window.books.getBooks({params:searchParams})
@@ -27,6 +43,14 @@ export default function BooksSearch() {
 
     if (booksResult.data.length > 0) {
       setBooksData(booksResult.data)
+      setBooksPagination(booksResult.pagination)
+    } else {
+      setBooksData([])
+      setBooksPagination({
+        count: 0,
+        current: 1,
+        pages: 0
+      })
     }
   }, [])
   
@@ -45,14 +69,40 @@ export default function BooksSearch() {
     }))
   }, [setSearchParams])
 
+  function updateSearch(params: TSearch) {
+    setSearchParams(prev => ({
+      ...prev,
+      where: {
+        attribute: params.attribute.toLowerCase() as TBookParamDB,
+        value: params.value
+      }
+    }))
+  }
+
+  function updatePage(page: number) {
+    setSearchParams(prev => ({
+      ...prev,
+      offset: page
+    }))
+  }
   
   return (
-    <div>
+    <div className="flex flex-col gap-2 mt-2">
+      <SearchBar
+        updateSearch={updateSearch}
+      />
       <TableBooks
         data={booksData}
         setOrderBy={setOrderBy}
         params={searchParams}
-      />      
+      />
+      <Pagination
+        data={{
+          ...booksPagination,
+          current: currentPage
+        }}
+        updatePage={setCurrentPage}
+      />
     </div>
   )
 }

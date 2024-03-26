@@ -23,7 +23,7 @@ export default function RootLayout() {
   return (
     <div className="flex flex-col size-full">
       <header 
-        className="bg-slate-800 h-10 flex justify-between items-center px-2"
+        className="bg-slate-800 min-h-10 flex justify-between items-center px-2 sticky top-0 z-[1000] w-full"
         onDoubleClick={() => window.windowAct.maximize()}
       >
         <Logo/>
@@ -32,7 +32,7 @@ export default function RootLayout() {
       </header>
 
       <main className="size-full grid grid-cols-[4rem_1fr]">
-        <nav className="col-start-1 col-end-2 z-[100]">
+        <nav className="col-start-1 col-end-2 z-[100] fixed h-full">
           <SidebarNav/>
         </nav>
 

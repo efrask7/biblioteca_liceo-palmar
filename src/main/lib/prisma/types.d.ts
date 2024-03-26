@@ -6,7 +6,7 @@ type TParams = {
   limit: number
   offset: number
   where?: {
-    attribute: TBookParam,
+    attribute: TBookParamDB,
     value: string
   }  
 }
