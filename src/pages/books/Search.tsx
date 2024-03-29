@@ -88,6 +88,8 @@ export default function BooksSearch() {
   
   return (
     <div className="flex flex-col gap-2 mt-2">
+      <h1 className="text-2xl font-bold">Buscador de libros</h1>
+
       <SearchBar
         updateSearch={updateSearch}
       />

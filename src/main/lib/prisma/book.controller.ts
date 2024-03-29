@@ -32,9 +32,15 @@ export async function getBooks({ params }: IGetBooks) {
     }
     
     if (params.where) {
-      prismaParams.where = {
-        [params.where.attribute]: {
-          contains: params.where.value
+      if (params.where.attribute === "id") {
+        prismaParams.where = {
+          id: Number(params.where.value)
+        }
+      } else {
+        prismaParams.where = {
+          [params.where.attribute]: {
+            contains: params.where.value
+          }
         }
       }
     }
@@ -59,6 +65,36 @@ export async function getBooks({ params }: IGetBooks) {
         count: countBooks,
         pages: allPages,
         current: params.offset
+      }
+    }
+  } catch (error) {
+    return {
+      error
+    }
+  }
+}
+
+export async function getBookById(id: number) {
+  try {
+    if (isNaN(id)) throw "El id no es valido"
+    const book = await prisma.books.findUnique({
+      where: {
+        id
+      }
+    })
+
+    if (!book) throw `No se encontro un libro con el id ${id}`
+
+    const bookRented = await prisma.bookTaken.findMany({
+      where: {
+        id
+      }
+    })
+
+    return {
+      data: {
+        book,
+        rented: bookRented
       }
     }
   } catch (error) {

@@ -51,7 +51,7 @@ export default function SearchBar({ updateSearch }: ISearchBar) {
         </div>
         
         <input 
-          type="text" 
+          type={searchParams.attribute.toLowerCase() === "id" ? "number" : "text"} 
           value={searchParams.value}
           onChange={(ev) => setSearchParams(prev => ({...prev, value: ev.target.value}))}
           className="flex-1 appeareance-none bg-transparent focus:ring-0 input-noborders"

@@ -9,6 +9,13 @@ export interface IBooksResult {
   }
 }
 
+export interface IBookByIdResult {
+  data: {
+    book: IBookDB,
+    rented: IBookRent[]
+  }
+}
+
 declare global {
   interface Window {
     windowAct: {
@@ -25,6 +32,9 @@ declare global {
       getBooks: (params: IGetBooks) => void
       handleGetBooks: (callback: (booksResult: IBooksResult) => void) => void
       closeHandleGetBooks: () => void
+      getById: (id: number) => void
+      handleGetBookById: (callback: (booksResult: IBookByIdResult) => void) => void
+      closeHandleGetBookById: () => void
     }
   }
 }

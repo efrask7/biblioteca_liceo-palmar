@@ -15,3 +15,11 @@ interface IBook {
 interface IBookDB extends IBook {
   id: number
 }
+
+interface IBookRent {
+  id: number
+  name: string
+  status: string
+  startDate: Date
+  endDate?: Date
+}

@@ -6,6 +6,7 @@ import BooksManage from "../pages/books/Manage";
 import DBIndex from "../pages/database/Index";
 import AboutIndex from "../pages/about/Index";
 import SettingsIndex from "../pages/settings/Index";
+import BooksManageID from "../pages/books/ManageID";
 
 const routesElements = createRoutesFromElements(
   <Route path="/" element={<RootLayout/>}>
@@ -13,7 +14,11 @@ const routesElements = createRoutesFromElements(
 
     <Route path="books">
       <Route path="search" element={<BooksSearch/>}/>
-      <Route path="manage" element={<BooksManage/>}/>
+      <Route path="manage">
+        <Route index element={<BooksManage/>}/>
+
+        <Route path=":id" element={<BooksManageID/>}/>
+      </Route>
     </Route>
 
     <Route path="database">

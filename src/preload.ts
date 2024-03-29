@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { Dispatch, SetStateAction } from "react";
-import { IBooksResult } from "./interface";
+import { IBookByIdResult, IBooksResult } from "./interface";
 
 contextBridge.exposeInMainWorld("windowAct", {
   close: () => ipcRenderer.invoke("window-close"),
@@ -17,5 +17,8 @@ contextBridge.exposeInMainWorld("files", {
 contextBridge.exposeInMainWorld("books", {
   getBooks: (params: IGetBooks) => ipcRenderer.invoke("books:getBooks", params),
   handleGetBooks: (callback: (booksResult: IBooksResult) => void) => ipcRenderer.on("books:getBooks", (_, data: IBooksResult) => callback(data)),
-  closeHandleGetBooks: () => ipcRenderer.off("books:getBooks", null)
+  closeHandleGetBooks: () => ipcRenderer.off("books:getBooks", () => {}),
+  getById: (id: number) => ipcRenderer.invoke("books:findById", id),
+  handleGetBookById: (callback: (booksResult: IBookByIdResult) => void) => ipcRenderer.on("books:findById", (_, data: IBookByIdResult) => callback(data)),
+  closeHandleGetBookById: () => ipcRenderer.off("books:findById", () => {})
 })

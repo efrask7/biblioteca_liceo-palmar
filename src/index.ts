@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import readExcel from './main/lib/excel/readExcel';
-import { getBooks, importExcel } from './main/lib/prisma/book.controller';
+import { getBookById, getBooks, importExcel } from './main/lib/prisma/book.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -73,9 +73,15 @@ const createWindow = (): void => {
 
     const books = await getBooks(params)
 
-    console.log("Books result", books)
-
     mainWindow.webContents.send("books:getBooks", books)
+  })
+
+  ipcMain.handle("books:findById", async (_, id: number) => {
+    console.log("Invoked findById with id", id)
+
+    const book = await getBookById(id)
+
+    mainWindow.webContents.send("books:findById", book)
   })
 };
 
