@@ -80,6 +80,9 @@ export async function getBookById(id: number) {
     const book = await prisma.books.findUnique({
       where: {
         id
+      },
+      include: {
+        taken: true
       }
     })
 
@@ -88,6 +91,9 @@ export async function getBookById(id: number) {
     const bookRented = await prisma.bookTaken.findMany({
       where: {
         id
+      },
+      orderBy: {
+        btId: "desc"
       }
     })
 

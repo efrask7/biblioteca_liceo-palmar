@@ -19,3 +19,8 @@ interface APIResponse {
   success?: boolean
   error?: any
 }
+
+interface IRentEdit {
+  id: number
+  status: "rented" | "returned"
+}

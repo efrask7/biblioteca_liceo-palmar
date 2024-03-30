@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import readExcel from './main/lib/excel/readExcel';
 import { getBookById, getBooks, importExcel } from './main/lib/prisma/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
-import { addNewRentBook } from './main/lib/prisma/bookrent.controller';
+import { addNewRentBook, editRentStatus } from './main/lib/prisma/bookrent.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -92,6 +92,14 @@ const createWindow = (): void => {
     const created = await addNewRentBook(params.id, params.name)
 
     mainWindow.webContents.send("rent:new", created)
+  })
+
+  ipcMain.handle("rent:edit", async (_, params: IRentEdit) => {
+    console.log("Invoked edit rent with params", params)
+
+    const edit = await editRentStatus(params.id, params.status)
+
+    mainWindow.webContents.send("rent:edit", edit)
   })
 };
 

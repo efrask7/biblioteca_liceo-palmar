@@ -17,9 +17,10 @@ interface IBookDB extends IBook {
 }
 
 interface IBookRent {
+  btId: number
   id: number
   name: string
-  status: string
+  status: "rented" | "returned"
   startDate: Date
   endDate?: Date
 }

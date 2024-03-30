@@ -6,6 +6,7 @@ import { Button } from "flowbite-react"
 import { BiPen, BiTrash } from "react-icons/bi"
 import BookPreview from "../../components/manage/BookPreview"
 import RentBookModal from "./RentBookModal"
+import RentTable from "../../components/manage/RentTable"
 
 export default function BooksManageID() {
 
@@ -86,6 +87,12 @@ export default function BooksManageID() {
         editMode={editMode}
         setEditMode={setEditMode}
        /> 
+      </div>
+
+      <div>
+        <RentTable
+          data={bookRentData}
+        />
       </div>
 
       <RentBookModal
