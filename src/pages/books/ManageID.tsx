@@ -5,6 +5,7 @@ import { MdArrowCircleLeft } from "react-icons/md"
 import { Button } from "flowbite-react"
 import { BiPen, BiTrash } from "react-icons/bi"
 import BookPreview from "../../components/manage/BookPreview"
+import RentBookModal from "./RentBookModal"
 
 export default function BooksManageID() {
 
@@ -18,10 +19,22 @@ export default function BooksManageID() {
 
   const [bookRentData, setBookRentData] = useState<IBookRent[]>([])
 
+  const [modalRent, setModalRent] = useState({
+    open: false,
+    bookId: 0,
+    bookName: "",
+  })
+
   function handleSetBookData(bookData: IBookByIdResult) {
+    console.log(bookData)
     const { data } = bookData
     setBookData(data.book)
     setBookRentData(data.rented)
+    setModalRent(prev => ({
+      ...prev,
+      bookId: data.book.id,
+      bookName: data.book.titulo
+    }))
   }
 
   useEffect(() => {
@@ -53,6 +66,7 @@ export default function BooksManageID() {
 
             <Button
               color="success"
+              onClick={() => setModalRent(prev => ({...prev, open:true}))}
             >
               Prestar libro
             </Button>
@@ -73,6 +87,13 @@ export default function BooksManageID() {
         setEditMode={setEditMode}
        /> 
       </div>
+
+      <RentBookModal
+        open={modalRent.open}
+        close={() => setModalRent(prev => ({...prev, open: false}))}
+        bookName={modalRent.bookName}
+        id={modalRent.bookId}
+      />
     </div>
   )
 }

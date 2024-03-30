@@ -14,3 +14,8 @@ type TParams = {
 interface IGetBooks {
   params: TParams
 }
+
+interface APIResponse {
+  success?: boolean
+  error?: any
+}

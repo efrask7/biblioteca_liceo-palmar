@@ -26,7 +26,8 @@ model Books {
 }
 
 model BookTaken {
-  id        Int       @id
+  btId      Int       @id @default(autoincrement())
+  id        Int
   bookId    Books     @relation(fields: [id], references: [id])
   name      String
   status    String

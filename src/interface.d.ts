@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
+import { IRentData } from "./pages/books/RentBookModal"
 
 export interface IBooksResult {
   data: IBookDB[]
@@ -36,7 +37,17 @@ declare global {
       handleGetBookById: (callback: (booksResult: IBookByIdResult) => void) => void
       closeHandleGetBookById: () => void
     }
+    rent: {
+      addRent: (params: Omit<IRentData, "bookName">) => void
+      handleAddRent: (callback: (result: APIResponse) => void) => void
+      closeHandleAddRent: () => void
+    }
   }
+}
+
+export interface IModalProps {
+  open: boolean
+  close: () => void
 }
 
 export {}
