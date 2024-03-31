@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { IBookByIdResult } from "../../interface"
 import { MdArrowCircleLeft } from "react-icons/md"
 import { Button } from "flowbite-react"
@@ -83,11 +83,12 @@ export default function BooksManageID() {
           &&
           (
             <>
-            <button
+            <Link
               className="text-lg"
+              to="/books/search"
             >
               <MdArrowCircleLeft className="size-12"/>
-            </button>
+            </Link>
 
             <Button
               color="success"
