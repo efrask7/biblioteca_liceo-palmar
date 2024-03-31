@@ -53,7 +53,7 @@ export async function editRentStatus(id: number, status: "rented" | "returned") 
     })
 
     return {
-      newRent
+      data: newRent
     }
   } catch (error) {
     return {

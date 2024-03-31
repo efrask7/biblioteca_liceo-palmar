@@ -80,9 +80,6 @@ export async function getBookById(id: number) {
     const book = await prisma.books.findUnique({
       where: {
         id
-      },
-      include: {
-        taken: true
       }
     })
 

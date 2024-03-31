@@ -92,4 +92,4 @@ typings/
 out/
 
 src/main/database
-.db
+*.db

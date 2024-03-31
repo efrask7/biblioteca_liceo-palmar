@@ -1,5 +1,6 @@
 import { Button, Table } from "flowbite-react";
-import { BiCheck } from "react-icons/bi";
+import { useEffect, useState } from "react";
+import { BiCheck, BiX } from "react-icons/bi";
 
 interface IRentTable {
   data: IBookRent[]
@@ -8,6 +9,21 @@ interface IRentTable {
 const tableHeaders = ["nombre", "fecha", "estado", "entregado"]
 
 export default function RentTable({ data }: IRentTable) {
+
+  const [bookRent, setBookRent] = useState<IBookRent[]>([])
+
+  useEffect(() => {
+    console.log("effect renttable", data)
+    setBookRent(data)
+  }, [data])
+
+  function changeStatus(id: number, status: "rented" | "returned") {
+    window.rent.editRent({
+      id,
+      status
+    })
+  }
+
   return (
     <div className="overflow-x-auto">
       <Table hoverable striped>
@@ -29,7 +45,7 @@ export default function RentTable({ data }: IRentTable) {
 
         <Table.Body className="divide-y">
           {
-            data.map((rent, i) => {
+            bookRent.map((rent, i) => {
 
               const statusName = {
                 rented: "Prestado",
@@ -51,17 +67,26 @@ export default function RentTable({ data }: IRentTable) {
                   <Table.Cell>{rent.name}</Table.Cell>
                   <Table.Cell>{startDate}</Table.Cell>
                   <Table.Cell
-                    className={`${rent.status === "rented" ? "text-emerald-400" : "text-gray-600"}`}
+                    className={`${rent.status === "rented" ? "text-emerald-400" : "text-gray-300"}`}
                   >
                     {statusName[rent.status]}
                   </Table.Cell>
                   <Table.Cell>{endDate}</Table.Cell>
                   <Table.Cell>
                     <Button
-                      color="success"
-                      title="Marcar como entregado"
+                      color={rent.status === "rented" ? "success" : "failure"}
+                      title={`Marcar como ${rent.status === "rented" ? "entregado" : "prestado"}`}
+                      onClick={() => {
+                          const newStatus = rent.status === "rented" ? "returned" : "rented"
+                          changeStatus(rent.btId, newStatus)
+                        }
+                      }
                     >
-                      <BiCheck className="size-6"/> 
+                      {
+                        rent.status === "rented"
+                          ? <BiCheck className="size-6"/> 
+                          : <BiX className="size-6"/>
+                      }
                     </Button>
                   </Table.Cell>
                 </Table.Row>

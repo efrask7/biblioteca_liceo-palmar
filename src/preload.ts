@@ -27,5 +27,8 @@ contextBridge.exposeInMainWorld("books", {
 contextBridge.exposeInMainWorld("rent", {
   addRent: (params: IRentData) => ipcRenderer.invoke("rent:new", params),
   handleAddRent: (callback: (result: APIResponse) => void) => ipcRenderer.on("rent:new", (_, data: APIResponse) => callback(data)),
-  closeHandleAddRent: () => ipcRenderer.off("rent:new", () => {})
+  closeHandleAddRent: () => ipcRenderer.off("rent:new", () => {}),
+  editRent: (params: IRentEdit) => ipcRenderer.invoke("rent:edit", params),
+  handleEditRent: (callback: (result: IRentEditRes) => void) => ipcRenderer.on("rent:edit", (_, data: IRentEditRes) => callback(data)),
+  closeHandleEditRent: () => ipcRenderer.off("rent:edit", () => {})
 })

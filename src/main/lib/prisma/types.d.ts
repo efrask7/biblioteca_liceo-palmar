@@ -24,3 +24,7 @@ interface IRentEdit {
   id: number
   status: "rented" | "returned"
 }
+
+interface IRentEditRes extends APIResponse {
+  data: IBookRent
+}

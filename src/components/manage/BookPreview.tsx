@@ -11,11 +11,31 @@ interface IBookPreview {
 export default function BookPreview({ data, editMode, setEditMode }: IBookPreview) {
 
   const [bookData, setBookData] = useState<IBookDB>({
-    ...data
+    id: 0,
+    autor: "",
+    cantidad: "",
+    editorial: "",
+    fecha: "",
+    observaciones: "",
+    orden: "",
+    origen: "",
+    titulo: "",
+    volumen: ""
   })
 
   useEffect(() => {
-    setBookData(data)
+    setBookData(_ => {
+
+      const newData: {[x:string]: any} = {}
+
+      for (let i in data) {
+        data[i as keyof IBookDB]
+          ? newData[i] = data[i as keyof IBookDB]
+          : newData[i] = ""
+      }
+
+      return newData as IBookDB
+    })
   }, [data])
 
   function updateBookData(attr: keyof IBookDB, value: string) {

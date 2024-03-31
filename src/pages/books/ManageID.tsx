@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { IBookByIdResult } from "../../interface"
 import { MdArrowCircleLeft } from "react-icons/md"
@@ -14,6 +14,15 @@ export default function BooksManageID() {
   
   const [bookData, setBookData] = useState<IBookDB>({
     id: 0,
+    autor: "",
+    cantidad: "",
+    editorial: "",
+    fecha: "",
+    observaciones: "",
+    orden: "",
+    origen: "",
+    titulo: "",
+    volumen: ""
   })
 
   const [editMode, setEditMode] = useState(false)
@@ -29,7 +38,10 @@ export default function BooksManageID() {
   function handleSetBookData(bookData: IBookByIdResult) {
     console.log(bookData)
     const { data } = bookData
-    setBookData(data.book)
+    setBookData(prev => ({
+      ...prev,
+      ...data.book
+    }))
     setBookRentData(data.rented)
     setModalRent(prev => ({
       ...prev,
@@ -38,13 +50,25 @@ export default function BooksManageID() {
     }))
   }
 
+  const handleEditRent = useCallback((result: IRentEditRes) => {
+    if (result.error) {
+      return
+    }
+
+    if (!id && editMode) return
+
+    window.books.getById(Number(id))
+  }, [editMode, id])
+
   useEffect(() => {
-    if (!id) return
     window.books.handleGetBookById(handleSetBookData)
-    // window.books.getById(Number(id))
+    window.rent.handleEditRent(handleEditRent)
     
-    return () => window.books.closeHandleGetBookById()
-  }, [id])
+    return () => {
+      window.books.closeHandleGetBookById()
+      window.rent.closeHandleEditRent()
+    }
+  }, [handleSetBookData, handleEditRent])
 
   useEffect(() => {
     if (!id && editMode) return

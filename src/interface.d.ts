@@ -41,6 +41,9 @@ declare global {
       addRent: (params: Omit<IRentData, "bookName">) => void
       handleAddRent: (callback: (result: APIResponse) => void) => void
       closeHandleAddRent: () => void
+      editRent: (params: IRentEdit) => void
+      handleEditRent: (callback: (result: IRentEditRes) => void) => void
+      closeHandleEditRent: () => void
     }
   }
 }
