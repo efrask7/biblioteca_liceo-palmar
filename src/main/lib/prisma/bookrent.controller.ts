@@ -2,6 +2,20 @@ import { PrismaClient } from "../../../main/database/generated/client";
 
 const prisma = new PrismaClient()
 
+async function existsRent(id: number) {
+  try {
+    await prisma.bookTaken.findUniqueOrThrow({
+      where: {
+        btId: id
+      }
+    })
+    
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
 export async function addNewRentBook(id: number, name: string) {
   try {
     const book = await prisma.bookTaken.create({
@@ -54,6 +68,28 @@ export async function editRentStatus(id: number, status: "rented" | "returned") 
 
     return {
       data: newRent
+    }
+  } catch (error) {
+    return {
+      error
+    }
+  }
+}
+
+export async function removeRent(id: number) {
+  try {
+    const exists = await existsRent(id)
+
+    if (!exists) throw "ID de prestacion no existe"
+
+    await prisma.bookTaken.delete({
+      where: {
+        btId: id
+      }
+    })
+
+    return {
+      success: true
     }
   } catch (error) {
     return {
