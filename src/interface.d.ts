@@ -44,6 +44,9 @@ declare global {
       editRent: (params: IRentEdit) => void
       handleEditRent: (callback: (result: IRentEditRes) => void) => void
       closeHandleEditRent: () => void
+      deleteRent: (id: number) => void
+      handleDeleteRent: (callback: (result: APIResponse) => void) => void
+      closeHandleDeleteRent: () => void
     }
   }
 }

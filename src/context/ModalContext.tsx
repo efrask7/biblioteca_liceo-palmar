@@ -1,9 +1,13 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react"
 import { IModalContext } from "./types"
 import ModalMsg, { IModalMsg, IModalMsgProps } from "../components/context/ModalMsg"
+import ModalOption, { IModalOption, IModalOptionsProps } from "../components/context/ModalOption"
 
 const ModalContext = createContext<IModalContext>({
   modal: {
+    open: () => {}
+  },
+  option: {
     open: () => {}
   }
 })
@@ -22,8 +26,21 @@ function ModalProvider({ children }: PropsWithChildren) {
     message: ""
   })
 
+  const [modalOption, setModalOption] = useState<Omit<IModalOption, "close">>({
+    open: false,
+    message: "",
+    onAccept: () => {}
+  })
+
   function handleOpenModalMsg(props: IModalMsgProps) {
     setModalMsg({
+      ...props,
+      open: true
+    })
+  }
+
+  function handleOpenModalOption(props: IModalOptionsProps) {
+    setModalOption({
       ...props,
       open: true
     })
@@ -34,6 +51,9 @@ function ModalProvider({ children }: PropsWithChildren) {
       value={{
         modal: {
           open: handleOpenModalMsg
+        },
+        option: {
+          open: handleOpenModalOption
         }
       }}
     >
@@ -42,6 +62,11 @@ function ModalProvider({ children }: PropsWithChildren) {
       <ModalMsg
         {...modalMsg}
         close={() => setModalMsg(prev => ({...prev, open:false}))}
+      />
+
+      <ModalOption
+        {...modalOption}
+        close={() => setModalOption(prev => ({...prev, open: false}))}
       />
     </ModalContext.Provider>
   )

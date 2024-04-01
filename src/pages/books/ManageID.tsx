@@ -60,15 +60,27 @@ export default function BooksManageID() {
     window.books.getById(Number(id))
   }, [editMode, id])
 
+  const handleDeleteRent = useCallback((result: APIResponse) => {
+    if (!id && editMode) return
+
+    if (result.error) {
+      return
+    }
+
+    window.books.getById(Number(id))
+  }, [editMode, id])
+
   useEffect(() => {
     window.books.handleGetBookById(handleSetBookData)
     window.rent.handleEditRent(handleEditRent)
+    window.rent.handleDeleteRent(handleDeleteRent)
     
     return () => {
       window.books.closeHandleGetBookById()
       window.rent.closeHandleEditRent()
+      window.rent.closeHandleDeleteRent()
     }
-  }, [handleSetBookData, handleEditRent])
+  }, [handleSetBookData, handleEditRent, handleDeleteRent])
 
   useEffect(() => {
     if (!id && editMode) return
@@ -107,11 +119,11 @@ export default function BooksManageID() {
       </div>
        
       <div>
-       <BookPreview
-        data={bookData}
-        editMode={editMode}
-        setEditMode={setEditMode}
-       /> 
+        <BookPreview
+          data={bookData}
+          editMode={editMode}
+          setEditMode={setEditMode}
+        /> 
       </div>
 
       <div>

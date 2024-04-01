@@ -1,6 +1,7 @@
 import { Button, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { BiCheck, BiX } from "react-icons/bi";
+import { BiCheck, BiTrash, BiX } from "react-icons/bi";
+import { useModal } from "../../context/ModalContext";
 
 interface IRentTable {
   data: IBookRent[]
@@ -12,6 +13,8 @@ export default function RentTable({ data }: IRentTable) {
 
   const [bookRent, setBookRent] = useState<IBookRent[]>([])
 
+  const { option } = useModal()
+
   useEffect(() => {
     console.log("effect renttable", data)
     setBookRent(data)
@@ -22,6 +25,10 @@ export default function RentTable({ data }: IRentTable) {
       id,
       status
     })
+  }
+
+  function handleDeleteRent(id: number) {
+    window.rent.deleteRent(id)
   }
 
   return (
@@ -72,7 +79,7 @@ export default function RentTable({ data }: IRentTable) {
                     {statusName[rent.status]}
                   </Table.Cell>
                   <Table.Cell>{endDate}</Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell className="flex items-center gap-2">
                     <Button
                       color={rent.status === "rented" ? "success" : "failure"}
                       title={`Marcar como ${rent.status === "rented" ? "entregado" : "prestado"}`}
@@ -87,6 +94,17 @@ export default function RentTable({ data }: IRentTable) {
                           ? <BiCheck className="size-6"/> 
                           : <BiX className="size-6"/>
                       }
+                    </Button>
+
+                    <Button
+                      color="failure"
+                      onClick={() => option.open({
+                        message: `Eliminar registro de ${rent.name} (${rent.btId})`,
+                        optionYesLabel: "Eliminar",
+                        onAccept: () => handleDeleteRent(rent.btId)
+                      })}
+                    >
+                      <BiTrash className="size-6"/>
                     </Button>
                   </Table.Cell>
                 </Table.Row>

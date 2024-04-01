@@ -30,5 +30,8 @@ contextBridge.exposeInMainWorld("rent", {
   closeHandleAddRent: () => ipcRenderer.off("rent:new", () => {}),
   editRent: (params: IRentEdit) => ipcRenderer.invoke("rent:edit", params),
   handleEditRent: (callback: (result: IRentEditRes) => void) => ipcRenderer.on("rent:edit", (_, data: IRentEditRes) => callback(data)),
-  closeHandleEditRent: () => ipcRenderer.off("rent:edit", () => {})
+  closeHandleEditRent: () => ipcRenderer.off("rent:edit", () => {}),
+  deleteRent: (id: number) => ipcRenderer.invoke("rent:remove", id),
+  handleDeleteRent: (callback: (result: APIResponse) => void) => ipcRenderer.on("rent:remove", (_, data: APIResponse) => callback(data)),
+  closeHandleDeleteRent: () => ipcRenderer.off("rent:remove", () => {})
 })
