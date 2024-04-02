@@ -28,3 +28,12 @@ interface IRentEdit {
 interface IRentEditRes extends APIResponse {
   data: IBookRent
 }
+
+interface IBookEdit {
+  id: number
+  data: IBook
+}
+
+interface IBookEditRes extends APIResponse {
+  data: IBook
+}

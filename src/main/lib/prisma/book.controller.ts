@@ -106,3 +106,23 @@ export async function getBookById(id: number) {
     }
   }
 }
+
+export async function updateBook(id: number, data: IBook) {
+  try {
+    if (isNaN(id)) throw "El id no es valido"
+    const updatedBook = await prisma.books.update({
+      where: {
+        id
+      },
+      data
+    })
+
+    return {
+      data: updatedBook
+    }
+  } catch (error) {
+    return {
+      error
+    }
+  }
+}

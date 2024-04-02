@@ -21,7 +21,10 @@ contextBridge.exposeInMainWorld("books", {
   closeHandleGetBooks: () => ipcRenderer.off("books:getBooks", () => {}),
   getById: (id: number) => ipcRenderer.invoke("books:findById", id),
   handleGetBookById: (callback: (booksResult: IBookByIdResult) => void) => ipcRenderer.on("books:findById", (_, data: IBookByIdResult) => callback(data)),
-  closeHandleGetBookById: () => ipcRenderer.off("books:findById", () => {})
+  closeHandleGetBookById: () => ipcRenderer.off("books:findById", () => {}),
+  updateBook: (params: IBookEdit) => ipcRenderer.invoke("books:update", params),
+  handleUpdateBook: (callback: (result: IBookEditRes) => void) => ipcRenderer.on("books:update", (_, data: IBookEditRes) => callback(data)),
+  closeHandleUpdateBook: () => ipcRenderer.off("books:update", () => {}),
 })
 
 contextBridge.exposeInMainWorld("rent", {

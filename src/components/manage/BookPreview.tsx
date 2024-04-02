@@ -1,6 +1,8 @@
-import { Button, Label, TextInput, Textarea } from "flowbite-react";
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { Button, Label, Spinner, TextInput, Textarea } from "flowbite-react";
+import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useState } from "react";
 import { BiPencil, BiTrash } from "react-icons/bi";
+import { useModal } from "../../context/ModalContext";
+import { HiCheckCircle } from "react-icons/hi";
 
 interface IBookPreview {
   data: IBookDB
@@ -9,6 +11,10 @@ interface IBookPreview {
 }
 
 export default function BookPreview({ data, editMode, setEditMode }: IBookPreview) {
+
+  const { modal } = useModal()
+
+  const [submitting, setSubmitting] = useState(false)
 
   const [bookData, setBookData] = useState<IBookDB>({
     id: 0,
@@ -24,7 +30,9 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
   })
 
   useEffect(() => {
-    setBookData(_ => {
+    setBookData(prev => {
+
+      if (data.id === 0) return prev
 
       const newData: {[x:string]: any} = {}
 
@@ -49,8 +57,51 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
     return editMode ? "text-emerald-400 dark:text-emerald-400" : "text-gray-200 dark:text-gray-200"
   }, [editMode])
 
+  const handleSubmit = useCallback((ev: FormEvent ) => {
+    ev.preventDefault()
+
+    if (submitting) return
+
+    setSubmitting(true)
+
+    const data: {[x: string]: any} = {}
+
+    Object.keys(bookData).forEach((key, i, arr) => {
+      if (key === "id") return
+      data[key] = bookData[key as keyof typeof bookData]
+    })
+
+    window.books.updateBook({
+      id: bookData.id,
+      data
+    })
+  }, [bookData, submitting])
+
+  const handleOnSubmitFinish = useCallback((result: IBookEditRes) => {
+    setSubmitting(false)
+    if (result.error) return
+
+    setEditMode(false)
+
+    modal.open({
+      message: "Se actualizo el libro",
+      Icon: HiCheckCircle
+    })
+
+    if (bookData.id === 0) return
+    window.books.getById(bookData.id)
+  }, [modal, bookData])
+
+  useEffect(() => {
+    window.books.handleUpdateBook(handleOnSubmitFinish)
+
+    return () => {
+      window.books.closeHandleUpdateBook()
+    }
+  }, [])
+
   return (
-    <form action="" className="flex flex-col gap-2 items-center">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 items-center">
       {
         editMode && (
 
@@ -58,8 +109,13 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
             <Button
               type="submit"
               color="success"
+              disabled={submitting}
             >
-              Guardar cambios
+              {
+                submitting
+                ? <Spinner/>
+                : "Guardar cambios"
+              }
             </Button>
 
             <Button

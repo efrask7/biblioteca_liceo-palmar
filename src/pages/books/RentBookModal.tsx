@@ -1,6 +1,7 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 import { IModalProps } from "../../interface";
 import { FormEvent, useCallback, useEffect, useState } from "react";
+import { HiCheckCircle } from "react-icons/hi";
 
 interface IRentBookModal extends IModalProps {
   id: number
@@ -60,14 +61,15 @@ export default function RentBookModal({ open, close, id, bookName }: IRentBookMo
     return () => window.rent.closeHandleAddRent()
   }, [handleAddRent])
 
-  function handleAcceptBtn() {
+  const handleAcceptBtn = useCallback(() => {
     setRentData(prev => ({
       ...prev,
       name: ""
     }))
 
     setConfirmModal(false)
-  }
+    window.books.getById(id)
+  }, [id])
 
   return (
     <>
@@ -110,19 +112,30 @@ export default function RentBookModal({ open, close, id, bookName }: IRentBookMo
     </Modal>
 
     <Modal show={confirmModal} onClose={() => handleAcceptBtn()}>
-      <Modal.Header>
-        Prestar libro
-      </Modal.Header>
+      <Modal.Header/>
 
       <Modal.Body>
-        {confirmMsg}
-      </Modal.Body>
+        <div className="text-center">
+          <HiCheckCircle
+            className="mx-auto mb-4 size-14 text-gray-300"
+          />
+          <h3 className="mb-5 text-lg font-normal text-gray-200">
+            {
+              confirmMsg
+            }
+          </h3>
+        </div>
 
-      <Modal.Footer>
-        <Button onClick={() => handleAcceptBtn()}>
-          Aceptar
-        </Button>
-      </Modal.Footer>
+        <div className="flex justify-center gap-4">
+          <Button
+            color="failure"
+            onClick={() => handleAcceptBtn()}
+            size="lg"
+          >
+            Aceptar
+          </Button>
+        </div>
+      </Modal.Body>
     </Modal>
     </>
   )
