@@ -3,8 +3,11 @@ import readExcel from './main/lib/excel/readExcel';
 import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/prisma/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
 import { addNewRentBook, editRentStatus, removeRent } from './main/lib/prisma/bookrent.controller';
+import { updateElectronApp } from "update-electron-app"
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+updateElectronApp()
 
 if (require('electron-squirrel-startup')) {
   app.quit();
