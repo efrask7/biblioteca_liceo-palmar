@@ -9,16 +9,27 @@ export interface IModalMsgProps {
   Icon?: IconType
   onClose?: () => void
   onCloseMsg?: string
+  btnOptional?: {
+    label: string
+    onClick: () => void
+  }
 }
 
 export interface IModalMsg extends IModalProps, IModalMsgProps {}
 
-export default function ModalMsg({ open, close, title, message, onClose, onCloseMsg, Icon }: IModalMsg) {
+export default function ModalMsg({ open, close, title, message, onClose, onCloseMsg, Icon, btnOptional }: IModalMsg) {
 
   const handleClose = useCallback(() => {
     if (onClose) onClose()
     close()
   }, [onClose, close])
+
+  const handleOnClickOptional = useCallback(() => {
+    if (btnOptional) {
+      btnOptional.onClick()
+      close()
+    }
+  }, [close, btnOptional])
 
   return (
     <Modal
@@ -56,9 +67,20 @@ export default function ModalMsg({ open, close, title, message, onClose, onClose
             <div className="flex justify-center gap-4">
               <Button
                 onClick={() => handleClose()}
+                color="success"
               >
                 Aceptar
               </Button>
+
+              {
+                btnOptional
+                &&
+                <Button
+                  onClick={() => handleOnClickOptional()}
+                >
+                  {btnOptional.label}
+                </Button>
+              }
             </div>
           )
         }
@@ -69,11 +91,24 @@ export default function ModalMsg({ open, close, title, message, onClose, onClose
         !Icon
         && (
           <Modal.Footer>
-            <Button onClick={() => handleClose()}>
+            <Button 
+              onClick={() => handleClose()}
+              color="success"
+            >
               {
                 onCloseMsg || "Aceptar"
               }
             </Button>
+
+            {
+                btnOptional
+                &&
+                <Button
+                  onClick={() => handleOnClickOptional()}
+                >
+                  {btnOptional.label}
+                </Button>
+              }
           </Modal.Footer>
         )
       }

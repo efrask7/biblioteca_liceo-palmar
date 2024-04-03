@@ -152,3 +152,20 @@ export async function deleteBook(id: number) {
     }
   }
 }
+
+export async function addBook(data: IBook) {
+  try {
+    const addedBook = await prisma.books.create({
+      data
+    })
+
+    return {
+      success: true,
+      data: addedBook
+    }
+  } catch (error) {
+    return {
+      error
+    }
+  }
+}

@@ -1,7 +1,8 @@
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useModal } from "../../context/ModalContext";
-import { HiExclamationCircle } from "react-icons/hi";
+import { HiCheck, HiCheckCircle, HiExclamationCircle } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 const bookDefault: Omit<IBookDB, "id"> = {
   titulo: "",
@@ -18,8 +19,10 @@ const bookDefault: Omit<IBookDB, "id"> = {
 export default function BooksManage() {
 
   const { modal } = useModal()
-  const [bookData, setBookData] = useState<Omit<IBookDB, "id">>(bookDefault)
+  const [bookData, setBookData] = useState<IBook>(bookDefault)
   const [submitting, setSubmitting] = useState(false)
+
+  const router = useNavigate()
 
   function updateBookData(attr: keyof IBookDB, value: string) {
     setBookData(prev => ({
@@ -51,7 +54,33 @@ export default function BooksManage() {
       })
       return
     }
+
+    window.books.addBook(bookData)
   }, [bookData, submitting])
+
+  const handleAddBookRes = useCallback((result: IBookAddRes) => {
+    if (result.error) {
+      return
+    }
+
+    modal.open({
+      message: `Se añadio el libro "${result.data.titulo} con el ID: ${result.data.id}"`,
+      Icon: HiCheckCircle,
+      btnOptional: {
+        label: "Ver libro",
+        onClick: () => router(`/books/manage/${result.data.id}`)
+      }
+    })
+
+    setBookData(bookDefault)
+    setSubmitting(false)
+  }, [modal])
+
+  useEffect(() => {
+    window.books.handleAddBook(handleAddBookRes)
+
+    return () => window.books.closeHandleAddBook()
+  }, [])
 
   return (
     <div className="flex flex-col items-center gap-2 py-2">

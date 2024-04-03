@@ -37,3 +37,7 @@ interface IBookEdit {
 interface IBookEditRes extends APIResponse {
   data: IBook
 }
+
+interface IBookAddRes extends APIResponse {
+  data: IBookDB
+}

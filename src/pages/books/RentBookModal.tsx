@@ -112,8 +112,6 @@ export default function RentBookModal({ open, close, id, bookName }: IRentBookMo
     </Modal>
 
     <Modal show={confirmModal} onClose={() => handleAcceptBtn()}>
-      <Modal.Header/>
-
       <Modal.Body>
         <div className="text-center">
           <HiCheckCircle
