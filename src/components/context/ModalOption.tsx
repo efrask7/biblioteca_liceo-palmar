@@ -20,8 +20,6 @@ export default function ModalOption({ open, close, message, optionYesLabel, onAc
       show={open}
       onClose={() => close()}
     >
-      <Modal.Header/>
-
       <Modal.Body>
         <div className="text-center">
           {

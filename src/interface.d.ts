@@ -39,6 +39,9 @@ declare global {
       updateBook: (params: IBookEdit) => void
       handleUpdateBook: (callback: (result: IBookEditRes) => void) => void
       closeHandleUpdateBook: () => void
+      deleteBook: (id: number) => void
+      handleDeleteBook: (callback: (result: APIResponse) => void) => void
+      closeHandleDeleteBook: () => void
     }
     rent: {
       addRent: (params: Omit<IRentData, "bookName">) => void

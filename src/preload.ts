@@ -25,6 +25,9 @@ contextBridge.exposeInMainWorld("books", {
   updateBook: (params: IBookEdit) => ipcRenderer.invoke("books:update", params),
   handleUpdateBook: (callback: (result: IBookEditRes) => void) => ipcRenderer.on("books:update", (_, data: IBookEditRes) => callback(data)),
   closeHandleUpdateBook: () => ipcRenderer.off("books:update", () => {}),
+  deleteBook: (id: number) => ipcRenderer.invoke("books:delete", id),
+  handleDeleteBook: (callback: (result: APIResponse) => void) => ipcRenderer.on("books:delete", (_, data: APIResponse) => callback(data)),
+  closeHandleDeleteBook: () => ipcRenderer.off("books:delete", () => {}),
 })
 
 contextBridge.exposeInMainWorld("rent", {

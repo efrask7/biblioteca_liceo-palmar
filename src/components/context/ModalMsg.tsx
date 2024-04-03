@@ -25,9 +25,15 @@ export default function ModalMsg({ open, close, title, message, onClose, onClose
       show={open}
       onClose={() => handleClose()}
     >
-      <Modal.Header>
-        {title || null}
-      </Modal.Header>
+      {
+        title
+        &&
+        (
+          <Modal.Header>
+            {title}
+          </Modal.Header>
+        )
+      }
 
       <Modal.Body>
         <div className="text-center">

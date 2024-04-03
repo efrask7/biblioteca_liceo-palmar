@@ -64,7 +64,7 @@ export default function SidebarNav() {
 
         <Sidebar.ItemGroup>
           <RenderLink label="Acerca" to="/about" icon={BiInfoCircle}/>
-          <RenderLink label="Ajustes" to="/settings" icon={VscGear}/>
+          {/* <RenderLink label="Ajustes" to="/settings" icon={VscGear}/> */}
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

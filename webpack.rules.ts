@@ -1,4 +1,5 @@
 import type { ModuleOptions } from 'webpack';
+import path from 'path'
 
 export const rules: Required<ModuleOptions>['rules'] = [
   {
@@ -25,4 +26,9 @@ export const rules: Required<ModuleOptions>['rules'] = [
       },
     },
   },
+  {
+    test: /\.(png|jpe?g|gif)$/i,
+    type: 'asset/resource'
+    
+  }
 ];

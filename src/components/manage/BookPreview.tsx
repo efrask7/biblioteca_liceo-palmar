@@ -2,7 +2,8 @@ import { Button, Label, Spinner, TextInput, Textarea } from "flowbite-react";
 import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useState } from "react";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { useModal } from "../../context/ModalContext";
-import { HiCheckCircle } from "react-icons/hi";
+import { HiCheckCircle, HiTrash } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 interface IBookPreview {
   data: IBookDB
@@ -12,7 +13,8 @@ interface IBookPreview {
 
 export default function BookPreview({ data, editMode, setEditMode }: IBookPreview) {
 
-  const { modal } = useModal()
+  const router = useNavigate()
+  const { modal, option } = useModal()
 
   const [submitting, setSubmitting] = useState(false)
 
@@ -57,7 +59,7 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
     return editMode ? "text-emerald-400 dark:text-emerald-400" : "text-gray-200 dark:text-gray-200"
   }, [editMode])
 
-  const handleSubmit = useCallback((ev: FormEvent ) => {
+  const handleSubmit = useCallback((ev: FormEvent) => {
     ev.preventDefault()
 
     if (submitting) return
@@ -92,13 +94,34 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
     window.books.getById(bookData.id)
   }, [modal, bookData])
 
+  const handleDeleteBook = useCallback((result: APIResponse) => {
+    if (result.error) return
+    
+    modal.open({
+      message: "Se borro el libro",
+      Icon: HiCheckCircle,
+      onClose: () => router("/books/search")
+    })
+  }, [])
+
   useEffect(() => {
     window.books.handleUpdateBook(handleOnSubmitFinish)
+    window.books.handleDeleteBook(handleDeleteBook)
 
     return () => {
       window.books.closeHandleUpdateBook()
+      window.books.closeHandleDeleteBook()
     }
-  }, [])
+  }, [handleOnSubmitFinish, handleDeleteBook])
+
+  const handleOptionDeleteBook = useCallback(() => {
+    option.open({
+      message: `¿Esta seguro de borrar el libro ${bookData.titulo}?`,
+      onAccept: () => window.books.deleteBook(bookData.id),
+      Icon: HiTrash,
+      optionYesLabel: "Borrar"
+    })    
+  }, [bookData])
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-2 items-center">
@@ -121,6 +144,7 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
             <Button
               type="button"
               color="failure"
+              onClick={() => handleOptionDeleteBook()}
             >
               <BiTrash/>
               Borrar libro

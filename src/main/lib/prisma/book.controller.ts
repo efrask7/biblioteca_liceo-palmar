@@ -126,3 +126,29 @@ export async function updateBook(id: number, data: IBook) {
     }
   }
 }
+
+export async function deleteBook(id: number) {
+  try {
+    if (isNaN(id)) throw "El id no es valido"
+    const deletedBook = await prisma.books.delete({
+      where: {
+        id
+      }
+    })
+
+    await prisma.bookTaken.deleteMany({
+      where: {
+        id
+      }
+    })
+
+    return {
+      success: true,
+      data: deletedBook
+    }
+  } catch (error) {
+    return {
+      error
+    }
+  }
+}

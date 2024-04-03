@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import readExcel from './main/lib/excel/readExcel';
-import { getBookById, getBooks, importExcel, updateBook } from './main/lib/prisma/book.controller';
+import { deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/prisma/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
 import { addNewRentBook, editRentStatus, removeRent } from './main/lib/prisma/bookrent.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -116,6 +116,14 @@ const createWindow = (): void => {
     const edit = await updateBook(params.id, params.data) 
 
     mainWindow.webContents.send("books:update", edit)
+  })
+
+  ipcMain.handle("books:delete", async (_, id: number) => {
+    console.log("Invoked delete book with id", id)
+
+    const deleted = await deleteBook(id)
+
+    mainWindow.webContents.send("books:delete", deleted)
   })
 };
 
