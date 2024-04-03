@@ -33,7 +33,7 @@ export default function RootLayout() {
           <ActionsButtons maximized={windowMaximized} />
         </header>
 
-        <main className="size-full grid grid-cols-[4rem_1fr]">
+        <main className="size-full grid grid-cols-[4rem_1fr] overflow-y-auto">
           <nav className="col-start-1 col-end-2 z-[100] fixed h-full">
             <SidebarNav/>
           </nav>

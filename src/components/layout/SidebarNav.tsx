@@ -1,7 +1,7 @@
 import { Sidebar } from "flowbite-react";
 import { useCallback, useState } from "react";
 import { IconType } from "react-icons";
-import { BiEdit, BiInfoCircle, BiSearch } from "react-icons/bi";
+import { BiEdit, BiInfoCircle, BiPlus, BiSearch } from "react-icons/bi";
 import { MdHouse, MdLibraryBooks, MdMenu } from "react-icons/md";
 import { VscDatabase, VscGear } from "react-icons/vsc";
 import { useNavigate, useNavigation } from "react-router-dom";
@@ -56,7 +56,7 @@ export default function SidebarNav() {
 
           <Sidebar.Collapse icon={MdLibraryBooks} label="Libros">
             <RenderLink label="Buscar" to="/books/search" icon={BiSearch}/>
-            <RenderLink label="Administrar" to="/books/manage" icon={BiEdit}/>
+            <RenderLink label="Agregar" to="/books/manage" icon={BiPlus}/>
           </Sidebar.Collapse>
 
           <RenderLink label="Base de datos" to="/database" icon={VscDatabase}/>

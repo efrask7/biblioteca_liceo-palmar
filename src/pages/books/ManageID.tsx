@@ -126,12 +126,23 @@ export default function BooksManageID() {
         /> 
       </div>
 
-      <div>
-        <RentTable
-          data={bookRentData}
-        />
-      </div>
+      {
+        bookRentData.length > 0
+        && (
+          <>
+          <div>
+            <h2 className="text-xl font-bold uppercase">Historial de préstamos</h2>
+          </div>
 
+          <div>
+            <RentTable
+              data={bookRentData}
+            />
+          </div>
+          </>
+        )
+      }
+      
       <RentBookModal
         open={modalRent.open}
         close={() => setModalRent(prev => ({...prev, open: false}))}
