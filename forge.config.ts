@@ -52,7 +52,7 @@ const config: ForgeConfig = {
       name: "@electron-forge/publisher-github",
       config: {
         repository: {
-          owner: "me",
+          owner: "efrask7",
           name: "liceo-bib"
         }
       }
