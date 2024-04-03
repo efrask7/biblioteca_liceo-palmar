@@ -28,6 +28,11 @@ declare global {
     }
     files: {
       open: () => void
+      handleOpen: (callback: (result: APIResponse) => void) => void
+      closeHandleOpen: () => void
+      delete: () => void
+      handleDelete: (callback: (result: APIResponse) => void) => void
+      closeHandleDelete: () => void
     }
     books: {
       getBooks: (params: IGetBooks) => void

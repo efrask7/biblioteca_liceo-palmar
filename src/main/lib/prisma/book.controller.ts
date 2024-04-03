@@ -5,8 +5,8 @@ import { isJsonNull } from "../excel/utils";
 const prisma = new PrismaClient()
 
 export async function importExcel(books: IBook[]) {
-  await prisma.$transaction(async (db) => {
-    for (let book of books) {
+  const excel = await prisma.$transaction(async (db) => {
+    for (const book of books) {
       if (isJsonNull(book)) return
       try {
         await db.books.create({
@@ -14,9 +14,23 @@ export async function importExcel(books: IBook[]) {
         })
       } catch (error) {
         console.log(error)
+        return {
+          error
+        }
       }
     }
+
+    return {
+      success: true
+    }
   })
+  console.log("Excel importExcel status", excel)
+
+  if (excel && !excel.success) return { error: excel.error }
+  
+  return {
+    success: true
+  }
 }
 
 export async function getBooks({ params }: IGetBooks) {
@@ -162,6 +176,21 @@ export async function addBook(data: IBook) {
     return {
       success: true,
       data: addedBook
+    }
+  } catch (error) {
+    return {
+      error
+    }
+  }
+}
+
+export async function deleteAllData() {
+  try {
+    await prisma.books.deleteMany()
+    await prisma.bookTaken.deleteMany()
+
+    return {
+      success: true,
     }
   } catch (error) {
     return {

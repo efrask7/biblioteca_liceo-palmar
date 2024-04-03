@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import readExcel from './main/lib/excel/readExcel';
-import { addBook, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/prisma/book.controller';
+import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/prisma/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
 import { addNewRentBook, editRentStatus, removeRent } from './main/lib/prisma/bookrent.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -49,25 +49,36 @@ const createWindow = (): void => {
     mainWindow.webContents.send("window:resize", false)
   })
 
-  ipcMain.handle("file:open", () => {
+  ipcMain.handle("file:open", async () => {
     const file = dialog.showOpenDialogSync({
-      title: "Seleccionar Excel o SQL",
+      title: "Seleccionar Excel o DB",
       filters: [
         { name: "Excel", extensions: ["xlsx", "xlsm", "xlsb"] },
-        { name: "Base de datos", extensions: ["db"] }
+        // { name: "Base de datos", extensions: ["db"] }
       ],
       properties: [
         'openFile'
       ]
     })
 
-    console.log("Filed selected", file)
+    console.log("File selected", file)
+
+    if (!file) {
+      mainWindow.webContents.send("file:open", {
+        success: false,
+        error: "Debes importar un archivo"
+      })
+      return
+    }
 
     const filePath = file[0] as string
 
     const books = readExcel(filePath)
 
-    importExcel(books)
+    const imported = await importExcel(books)
+    console.log("Imported excel", imported)
+
+    mainWindow.webContents.send("file:open", imported)
   })
 
   ipcMain.handle("books:getBooks", async (_, params: IGetBooks) => {
@@ -132,6 +143,14 @@ const createWindow = (): void => {
     const added = await addBook(data)
 
     mainWindow.webContents.send("books:add", added)
+  })
+
+  ipcMain.handle("file:delete", async () => {
+    console.log("Invoked delete all data")
+
+    const deleted = await deleteAllData()
+
+    mainWindow.webContents.send("file:delete", deleted)
   })
 };
 

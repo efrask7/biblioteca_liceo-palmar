@@ -8,11 +8,16 @@ contextBridge.exposeInMainWorld("windowAct", {
   maximize: () => ipcRenderer.invoke("window-maximize"),
   minimize: () => ipcRenderer.invoke("window-minimize"),
   handleChange: (setState: Dispatch<SetStateAction<boolean>>) => ipcRenderer.on("window:resize", (_, data) => setState(data)),
-  closeHandleChange: () => ipcRenderer.off("window:resize", null)
+  closeHandleChange: () => ipcRenderer.off("window:resize", () => {})
 })
 
 contextBridge.exposeInMainWorld("files", {
-  open: () => ipcRenderer.invoke("file:open")
+  open: () => ipcRenderer.invoke("file:open"),
+  handleOpen: (callback: (result: APIResponse) => void) => ipcRenderer.on("file:open", (_, data) => callback(data)),
+  closeHandleOpen: () => ipcRenderer.off("file:open", () => {}),
+  delete: () => ipcRenderer.invoke("file:delete"),
+  handleDelete: (callback: (result: APIResponse) => void) => ipcRenderer.on("file:delete", (_, data) => callback(data)),
+  closeHandleDelete: () => ipcRenderer.off("file:delete", () => {})
 })
 
 contextBridge.exposeInMainWorld("books", {
