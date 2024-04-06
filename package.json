@@ -1,8 +1,8 @@
 {
   "name": "liceo_bib",
-  "productName": "liceo_bib",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "productName": "Biblioteca liceo",
+  "version": "0.4.0",
+  "description": "Administrador de biblioteca",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -10,6 +10,10 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
+  },
+  "repository": {
+    "url": "https://github.com/efrask7/liceo_bib",
+    "type": "git"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.3.1",
@@ -32,7 +36,6 @@
     "eslint-plugin-import": "^2.29.1",
     "fork-ts-checker-webpack-plugin": "^7.3.0",
     "node-loader": "^2.0.0",
-    "prisma": "^5.11.0",
     "style-loader": "^3.3.4",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
@@ -45,11 +48,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "^5.11.0",
+    "@types/better-sqlite3": "^7.6.9",
     "autoprefixer": "^10.4.19",
+    "better-sqlite3": "^9.4.5",
     "electron-squirrel-startup": "^1.0.0",
     "flowbite-react": "^0.7.5",
-    "path-browserify": "^1.0.1",
     "postcss": "^8.4.38",
     "postcss-loader": "^8.1.1",
     "react": "^18.2.0",

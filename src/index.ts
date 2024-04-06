@@ -1,13 +1,15 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import readExcel from './main/lib/excel/readExcel';
-import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/prisma/book.controller';
+import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/sqlite/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
-import { addNewRentBook, editRentStatus, removeRent } from './main/lib/prisma/bookrent.controller';
+import { addNewRentBook, editRentStatus, removeRent } from './main/lib/sqlite/bookrent.controller';
 import { updateElectronApp } from "update-electron-app"
+import { createDatabase } from './main/lib/sqlite/db.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 updateElectronApp()
+createDatabase()
 
 if (require('electron-squirrel-startup')) {
   app.quit();
