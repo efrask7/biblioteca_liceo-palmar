@@ -31,7 +31,7 @@ const createWindow = (): void => {
   });
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
+  
   ipcMain.handle("window-close", () => {
     mainWindow.close()
   })

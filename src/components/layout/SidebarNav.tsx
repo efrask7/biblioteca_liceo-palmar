@@ -24,16 +24,11 @@ function RenderLink({ to, icon, label }: { to: string, icon?: IconType, label: s
 export default function SidebarNav() {
 
   const [open, setOpen] = useState(false)
-  const router = useNavigate()
-
-  const toUrl = useCallback((url: string) => {
-    router(url)
-  }, [router])
 
   return (
     <Sidebar 
       collapsed={!open}
-      className="select-none"
+      className="select-none transition-all"
       theme={{
         root: {
           base: 'h-full',
@@ -41,9 +36,25 @@ export default function SidebarNav() {
               on: 'w-16',
               off: 'w-64',
           },
-          inner: 'h-full overflow-y-auto overflow-x-hidden rounded-none bg-gray-50 py-4 px-3 dark:bg-gray-800',
+          inner: 'h-full overflow-y-auto overflow-x-hidden rounded-none bg-head py-4 px-3',
+        },
+        item: {
+          base: 'flex items-center justify-center rounded-lg p-2 text-base font-normal text-white hover:text-black hover:bg-headgreen',
+          icon: {
+            base: 'h-6 w-6 flex-shrink-0 transition duration-75',
+          },
+        },
+        collapse: {
+          button: 'group flex w-full items-center rounded-lg p-2 text-base font-normal text-white transition duration-75 hover:bg-headgreen hover:text-black',
+          icon: {
+            base: 'h-6 w-6 flex-shrink-0 transition duration-75',
+            open: {
+              on: 'text-slate-300'
+            }
+          },
         }
       }}
+      onPointerLeave={() => setOpen(false)}
     >
       <Sidebar.Items>
         <Sidebar.ItemGroup>
