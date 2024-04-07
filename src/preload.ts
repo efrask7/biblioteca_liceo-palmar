@@ -49,3 +49,7 @@ contextBridge.exposeInMainWorld("rent", {
   handleDeleteRent: (callback: (result: APIResponse) => void) => ipcRenderer.on("rent:remove", (_, data: APIResponse) => callback(data)),
   closeHandleDeleteRent: () => ipcRenderer.off("rent:remove", () => {})
 })
+
+contextBridge.exposeInMainWorld("testfunc", {
+  test: () => ipcRenderer.invoke("test")
+})

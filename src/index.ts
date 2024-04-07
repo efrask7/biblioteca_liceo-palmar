@@ -4,7 +4,7 @@ import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel,
 import { IRentData } from './pages/books/RentBookModal';
 import { addNewRentBook, editRentStatus, removeRent } from './main/lib/sqlite/bookrent.controller';
 import { updateElectronApp } from "update-electron-app"
-import { createDatabase } from './main/lib/sqlite/db.controller';
+import { createDatabase, getTableCount } from './main/lib/sqlite/db.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -31,6 +31,10 @@ const createWindow = (): void => {
   });
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  //!test func
+  ipcMain.handle("test", () => console.log("TEST", getTableCount("Books")))
+  //!
   
   ipcMain.handle("window-close", () => {
     mainWindow.close()

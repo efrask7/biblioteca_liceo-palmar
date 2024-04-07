@@ -88,3 +88,13 @@ export async function beginTransactionDB(query: string, data: any[]): Promise<{s
     }
   })
 }
+
+export function getTableCount(table: "Books" | "BookRent") {
+  const db = getDB()
+
+  const stmt = db.prepare(`SELECT count(id) FROM ${table}`)
+
+  const res = stmt.get() as { 'count(id)': number }
+
+  return res['count(id)']
+}

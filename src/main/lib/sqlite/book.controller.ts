@@ -1,6 +1,6 @@
 import { isJsonNull } from "../excel/utils";
 import Database from "better-sqlite3";
-import { getDB } from "./db.controller";
+import { getDB, getTableCount } from "./db.controller";
 import { dBParamsFixed, fixBookDBJson } from "./utils/fixedDBParams";
 
 export async function importExcel(books: IBook[]) {
@@ -234,11 +234,13 @@ export async function deleteBook(id: number) {
     if (isNaN(id)) throw "El id no es valido"
 
     const db = getDB()
+    
+    const rentStmt = db.prepare("DELETE FROM BookRent WHERE book = ?").run(id)
+    
+    if (rentStmt.changes === 0 && (getTableCount("BookRent") !== 0)) throw "No se pudieron eliminar los registros del libro"
 
     const stmt = db.prepare("DELETE FROM Books WHERE id = ?")
     const res = stmt.run(id)
-
-    db.prepare("DELETE FROM BookRent WHERE book = ?").run(id)
 
     if (res.changes === 0) throw "No se pudo eliminar el libro"
 
@@ -303,11 +305,22 @@ export async function deleteAllData() {
   try {
     // await prisma.books.deleteMany()
     // await prisma.bookTaken.deleteMany()
+    const db = getDB()
+
+    const bookRentDelete = db.prepare("DELETE FROM BookRent WHERE id > 0").run()
+
+    if (bookRentDelete.changes === 0 && (getTableCount("BookRent") !== 0)) throw "No se pudo borrar la tabla de registros"
+    
+    const booksDelete = db.prepare("DELETE FROM Books WHERE id > 0").run()
+    
+    if (booksDelete.changes === 0 && (getTableCount("Books") !== 0)) throw "No se pudo borrar la tabla de libros"
+    
 
     return {
       success: true,
     }
   } catch (error) {
+    console.log("Error deleting DB", error)
     return {
       error
     }

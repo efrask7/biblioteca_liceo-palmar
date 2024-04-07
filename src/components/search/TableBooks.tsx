@@ -29,17 +29,18 @@ export default function TableBooks({ data, setOrderBy, params }: ITableBooks) {
                 <p className="flex items-center gap-2">
 
                   {header}
-                  <span className="text-cyan-500">
-                    {
-                      params.orderBy === header
-                      &&
-                      (
-                        params.order === "ASC"
-                          ? <VscArrowDown/>
-                          : <VscArrowUp/>
+                  {
+                    params.orderBy === header
+                    && (
+                      <span className="text-black p-1 rounded-full bg-head">
+                        {
+                          params.order === "ASC"
+                            ? <VscArrowDown/>
+                            : <VscArrowUp/>
+                        }
+                      </span>
                       )
-                    }
-                  </span>
+                  }
                 </p>
               </Table.HeadCell>
             ))
@@ -47,11 +48,11 @@ export default function TableBooks({ data, setOrderBy, params }: ITableBooks) {
           <Table.HeadCell className="bg-headgreen"/>        
         </Table.Head>
 
-        <Table.Body className="divide-y">
+        <Table.Body className="divide-y text-black">
           {
             data.map((book, i) => (
               <Table.Row key={i} className="">
-                <Table.Cell>{book.id}</Table.Cell>
+                <Table.Cell className="font-bold">{book.id}</Table.Cell>
                 <Table.Cell>{book.titulo}</Table.Cell>
                 <Table.Cell>{book.autor}</Table.Cell>
                 <Table.Cell>{book.editorial}</Table.Cell>
