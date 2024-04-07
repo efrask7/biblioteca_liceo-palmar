@@ -56,6 +56,31 @@ export async function importExcel(books: IBook[]) {
   }
 }
 
+function getBook(id: number) {
+  try {
+    const db = getDB()
+    const stmt = db.prepare("SELECT * FROM Books WHERE id = ?")
+    const res = stmt.get(id)
+    
+    return res
+  } catch (error) {
+    return false
+  }
+}
+
+export function existsBook(id: number) {
+  try {
+    const db = getDB()
+
+    const stmt = db.prepare("SELECT id FROM Books WHERE id = ?")
+    const res = stmt.get(id)
+
+    return res ? true : false
+  } catch (error) {
+    return false
+  }
+}
+
 export async function getBooks({ params }: IGetBooks) {
   try {
 
@@ -65,7 +90,7 @@ export async function getBooks({ params }: IGetBooks) {
       if (params.where.attribute === "id") {
         query += ` WHERE id = ${params.where.value}`
       } else {
-        query += ` WHERE ${params.where.attribute} LIKE '%${params.where.value}%'`
+        query += ` WHERE ${dBParamsFixed[params.where.attribute]} LIKE '%${params.where.value}%'`
       }
     }
 
@@ -177,6 +202,16 @@ export async function getBookById(id: number) {
 export async function updateBook(id: number, data: IBook) {
   try {
     if (isNaN(id)) throw "El id no es valido"
+    const db = getDB()
+
+    const stmt = db.prepare("UPDATE Books SET title = ?, author = ?, orderBk = ?, volume = ?, publisher = ?, book_date = ?, origin = ?, observations = ?, quantity = ? WHERE id = ?")
+
+    const res = stmt.run(data.titulo, data.autor, data.orden, data.volumen, data.editorial, data.fecha, data.origen, data.observaciones, data.cantidad, id)
+
+    if (res.changes === 0) throw "No se pudo actualizar el libro"
+
+    const resData = fixBookDBJson(getBook(id) as IBookSQDB)
+
     // const updatedBook = await prisma.books.update({
     //   where: {
     //     id
@@ -185,7 +220,7 @@ export async function updateBook(id: number, data: IBook) {
     // })
 
     return {
-      data: {}
+      data: resData
     }
   } catch (error) {
     return {
@@ -197,6 +232,19 @@ export async function updateBook(id: number, data: IBook) {
 export async function deleteBook(id: number) {
   try {
     if (isNaN(id)) throw "El id no es valido"
+
+    const db = getDB()
+
+    const stmt = db.prepare("DELETE FROM Books WHERE id = ?")
+    const res = stmt.run(id)
+
+    db.prepare("DELETE FROM BookRent WHERE book = ?").run(id)
+
+    if (res.changes === 0) throw "No se pudo eliminar el libro"
+
+    return {
+      success: true
+    }
     // const deletedBook = await prisma.books.delete({
     //   where: {
     //     id
@@ -222,6 +270,20 @@ export async function deleteBook(id: number) {
 
 export async function addBook(data: IBook) {
   try {
+    const db = getDB()
+    const stmt = db.prepare("INSERT INTO Books (title, author, orderBk, volume, publisher, book_date, origin, observations, quantity) VALUES (?,?,?,?,?,?,?,?,?)")
+    
+    const res = stmt.run(data.titulo, data.autor, data.orden, data.volumen, data.editorial, data.fecha, data.origen, data.observaciones, data.cantidad)
+    
+    if (res.changes === 0) throw "No se pudo añadir el libro"
+
+    const resData = fixBookDBJson(getBook(res.lastInsertRowid as number) as IBookSQDB)
+
+    return {
+      success: true,
+      data: resData
+    }
+
     // const addedBook = await prisma.books.create({
     //   data
     // })

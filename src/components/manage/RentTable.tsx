@@ -85,7 +85,7 @@ export default function RentTable({ data }: IRentTable) {
                       title={`Marcar como ${rent.status === "rented" ? "entregado" : "prestado"}`}
                       onClick={() => {
                           const newStatus = rent.status === "rented" ? "returned" : "rented"
-                          changeStatus(rent.btId, newStatus)
+                          changeStatus(rent.id, newStatus)
                         }
                       }
                     >
@@ -99,9 +99,9 @@ export default function RentTable({ data }: IRentTable) {
                     <Button
                       color="failure"
                       onClick={() => option.open({
-                        message: `Eliminar registro de ${rent.name} (${rent.btId})`,
+                        message: `Eliminar registro de ${rent.name} (${rent.id})`,
                         optionYesLabel: "Eliminar",
-                        onAccept: () => handleDeleteRent(rent.btId)
+                        onAccept: () => handleDeleteRent(rent.id)
                       })}
                     >
                       <BiTrash className="size-6"/>

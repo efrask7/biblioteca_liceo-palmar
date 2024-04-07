@@ -64,7 +64,7 @@ export default function BooksManage() {
     }
 
     modal.open({
-      message: `Se añadio el libro "${result.data.titulo} con el ID: ${result.data.id}"`,
+      message: `Se añadio el libro "${result.data.titulo}" con el ID: ${result.data.id}`,
       Icon: HiCheckCircle,
       btnOptional: {
         label: "Ver libro",
@@ -159,6 +159,18 @@ export default function BooksManage() {
             value={bookData.origen}
             onChange={(ev) => updateBookData("origen", ev.target.value)}
             id="bp_origen"
+          />
+        </div>
+
+        <div>
+          <div>
+            <Label value="Orden" htmlFor="bp_orden" className="text-emerald-400 dark:text-emerald-400"/>
+          </div>
+
+          <TextInput
+            value={bookData.orden}
+            onChange={(ev) => updateBookData("orden", ev.target.value)}
+            id="bp_orden"
           />
         </div>
 

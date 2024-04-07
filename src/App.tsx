@@ -5,7 +5,5 @@ import { Flowbite } from "flowbite-react"
 
 const root = createRoot(document.getElementById("root"))
 root.render(
-  <Flowbite theme={{mode:"dark"}}>
-    <RouterProvider router={appRoutes}/>
-  </Flowbite>
+  <RouterProvider router={appRoutes}/>
 )

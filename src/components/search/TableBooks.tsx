@@ -47,7 +47,7 @@ export default function TableBooks({ data, setOrderBy, params }: ITableBooks) {
         <Table.Body className="divide-y">
           {
             data.map((book, i) => (
-              <Table.Row key={i} className="text-gray-200">
+              <Table.Row key={i} className="">
                 <Table.Cell>{book.id}</Table.Cell>
                 <Table.Cell>{book.titulo}</Table.Cell>
                 <Table.Cell>{book.autor}</Table.Cell>
@@ -57,7 +57,7 @@ export default function TableBooks({ data, setOrderBy, params }: ITableBooks) {
                 <Table.Cell>
                   <Link 
                     to={`/books/manage/${book.id}`}
-                    className="p-2 rounded-lg bg-cyan-500 hover:bg-cyan-600 focus:bg-cyan-700 text-lg text-gray-200 flex items-center justify-center"
+                    className="p-2 rounded-lg bg-cyan-500 hover:bg-cyan-600 focus:bg-cyan-700 text-lg flex items-center justify-center"
                   >
                     <IoMdEye/>
                   </Link>

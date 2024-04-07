@@ -243,6 +243,19 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
 
         <div>
           <div>
+            <Label value="Orden" htmlFor="bp_orden" className={useLabelColor()}/>
+          </div>
+
+          <TextInput
+            value={bookData.orden}
+            onChange={(ev) => updateBookData("orden", ev.target.value)}
+            readOnly={!editMode}
+            id="bp_orden"
+          />
+        </div>
+
+        <div>
+          <div>
             <Label value="Cantidad" htmlFor="bp_cantidad" className={useLabelColor()}/>
           </div>
 
