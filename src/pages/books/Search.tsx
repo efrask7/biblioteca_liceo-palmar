@@ -93,11 +93,13 @@ export default function BooksSearch() {
       <SearchBar
         updateSearch={updateSearch}
       />
+
       <TableBooks
         data={booksData}
         setOrderBy={setOrderBy}
         params={searchParams}
       />
+      
       <Pagination
         data={{
           ...booksPagination,

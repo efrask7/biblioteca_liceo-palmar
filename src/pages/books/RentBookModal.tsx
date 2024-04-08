@@ -115,9 +115,9 @@ export default function RentBookModal({ open, close, id, bookName }: IRentBookMo
       <Modal.Body>
         <div className="text-center">
           <HiCheckCircle
-            className="mx-auto mb-4 size-14 text-gray-300"
+            className="mx-auto mb-4 size-14 text-emerald-600"
           />
-          <h3 className="mb-5 text-lg font-normal text-gray-200">
+          <h3 className="mb-5 text-lg font-normal text-black">
             {
               confirmMsg
             }
@@ -126,7 +126,7 @@ export default function RentBookModal({ open, close, id, bookName }: IRentBookMo
 
         <div className="flex justify-center gap-4">
           <Button
-            color="failure"
+            color="success"
             onClick={() => handleAcceptBtn()}
             size="lg"
           >

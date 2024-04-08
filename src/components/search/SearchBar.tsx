@@ -39,11 +39,11 @@ export default function SearchBar({ updateSearch }: ISearchBar) {
       <form 
         onSubmit={handleSubmit}
         className={`
-          w-full flex overflow-hidden bg-slate-800 rounded-xl
+          w-full flex overflow-hidden bg-transparent border border-bordercol rounded-xl
           ${inputFocus && "ring ring-offset-1 ring-cyan-500"}
         `}
       >
-        <div className="w-[10rem] h-[inherit] flex items-center justify-center border-r">
+        <div className="w-[10rem] h-[inherit] bg-azure-radiance-500 hover:bg-azure-radiance-600 focus:bg-azure-radiance-700 text-white flex items-center justify-center border-r">
           <SearchDropdown
             active={searchParams.attribute}
             updateActive={updateAttribute}
@@ -61,7 +61,7 @@ export default function SearchBar({ updateSearch }: ISearchBar) {
 
         <button 
           type="submit" 
-          className="w-[5rem] h-[inherit] flex items-center justify-center border-l"
+          className="w-[5rem] h-[inherit] bg-azure-radiance-500 hover:bg-azure-radiance-600 focus:bg-azure-radiance-700 text-white flex items-center justify-center border-l"
         >
           <BiSearch/>
         </button>

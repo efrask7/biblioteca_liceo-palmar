@@ -1,13 +1,15 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import readExcel from './main/lib/excel/readExcel';
-import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/prisma/book.controller';
+import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/sqlite/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
-import { addNewRentBook, editRentStatus, removeRent } from './main/lib/prisma/bookrent.controller';
+import { addNewRentBook, editRentStatus, removeRent } from './main/lib/sqlite/bookrent.controller';
 import { updateElectronApp } from "update-electron-app"
+import { createDatabase, getTableCount } from './main/lib/sqlite/db.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 updateElectronApp()
+createDatabase()
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -26,10 +28,15 @@ const createWindow = (): void => {
       nodeIntegration: true,
       nodeIntegrationInWorker: true
     },
+    icon: './static/img/logo_win.ico'
   });
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
+  //!test func
+  ipcMain.handle("test", () => console.log("TEST", getTableCount("Books")))
+  //!
+  
   ipcMain.handle("window-close", () => {
     mainWindow.close()
   })

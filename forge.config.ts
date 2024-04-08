@@ -14,9 +14,18 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    icon: './src/static/img/logo_win',
+    extraResource: [
+      "./src/static/img/logo_win.ico"
+    ]
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [new MakerSquirrel({
+    authors: 'efrask7',
+    description: 'Biblioteca Liceo Palmar',
+    setupIcon: './src/static/img/logo_win.ico',
+    iconUrl: 'https://efrask7.github.io/biblioteca_liceo-palmar/logo_win.ico'
+  }), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
@@ -53,8 +62,9 @@ const config: ForgeConfig = {
       config: {
         repository: {
           owner: "efrask7",
-          name: "liceo-bib"
-        }
+          name: "biblioteca_liceo-palmar"
+        },
+        authToken: process.env.GITHUB_TOKEN
       }
     }
   ]

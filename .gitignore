@@ -93,5 +93,8 @@ out/
 
 #
 
+#DB
 src/main/database
 *.db
+*.db-shm
+*.db-wal

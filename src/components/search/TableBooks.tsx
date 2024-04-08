@@ -13,42 +13,46 @@ const tableHeaders = ["id", "titulo", "autor", "editorial", "fecha", "cantidad"]
 
 export default function TableBooks({ data, setOrderBy, params }: ITableBooks) {
   return (
-    <div className="overflow-x-auto">
-      <Table striped hoverable>
+    <div className="overflow-x-auto border border-bordercol rounded">
+      <Table 
+        striped 
+        hoverable
+      >
         <Table.Head>
           {
             tableHeaders.map((header, i) => (
               <Table.HeadCell 
                 key={i} 
                 onClick={() => setOrderBy(header as TBookParamDB)} 
-                className="cursor-pointer text-base"
+                className="cursor-pointer text-base bg-headgreen"
               >
                 <p className="flex items-center gap-2">
 
                   {header}
-                  <span className="text-cyan-500">
-                    {
-                      params.orderBy === header
-                      &&
-                      (
-                        params.order === "ASC"
-                          ? <VscArrowDown/>
-                          : <VscArrowUp/>
+                  {
+                    params.orderBy === header
+                    && (
+                      <span className="text-black p-1 rounded-full bg-head">
+                        {
+                          params.order === "ASC"
+                            ? <VscArrowDown/>
+                            : <VscArrowUp/>
+                        }
+                      </span>
                       )
-                    }
-                  </span>
+                  }
                 </p>
               </Table.HeadCell>
             ))
           }
-          <Table.HeadCell></Table.HeadCell>          
+          <Table.HeadCell className="bg-headgreen"/>        
         </Table.Head>
 
-        <Table.Body className="divide-y">
+        <Table.Body className="divide-y text-black">
           {
             data.map((book, i) => (
-              <Table.Row key={i} className="text-gray-200">
-                <Table.Cell>{book.id}</Table.Cell>
+              <Table.Row key={i} className="">
+                <Table.Cell className="font-bold">{book.id}</Table.Cell>
                 <Table.Cell>{book.titulo}</Table.Cell>
                 <Table.Cell>{book.autor}</Table.Cell>
                 <Table.Cell>{book.editorial}</Table.Cell>
@@ -57,7 +61,7 @@ export default function TableBooks({ data, setOrderBy, params }: ITableBooks) {
                 <Table.Cell>
                   <Link 
                     to={`/books/manage/${book.id}`}
-                    className="p-2 rounded-lg bg-cyan-500 hover:bg-cyan-600 focus:bg-cyan-700 text-lg text-gray-200 flex items-center justify-center"
+                    className="p-2 rounded-lg bg-azure-radiance-500 hover:bg-azure-radiance-600 focus:bg-azure-radiance-700 text-white text-lg border border-headgreen flex items-center justify-center"
                   >
                     <IoMdEye/>
                   </Link>

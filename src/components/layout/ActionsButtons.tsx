@@ -18,7 +18,7 @@ function Btn({ children, action, func }: { children: ReactNode, action: TAction,
       className={
         `
           w-12 h-full flex items-center justify-center text-lg
-          ${action === "close" ? "hover:bg-red-600" : "hover:bg-slate-900"}
+          ${action === "close" ? "hover:bg-red-600" : "hover:bg-slate-400"}
         `
       }
       onClick={() => {

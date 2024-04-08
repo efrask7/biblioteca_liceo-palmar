@@ -10,7 +10,7 @@ interface IPagination {
 }
 
 const inputClass = "h-[inherit] w-16 rounded-lg py-1 bg-transparent ring-1 text-center"
-const btnClass = "h-[inherit] w-10 text-2xl rounded-lg flex items-center justify-center bg-cyan-500 hover:bg-cyan-600 focus:bg-cyan-700"
+const btnClass = "h-[inherit] w-10 text-2xl rounded-lg flex items-center justify-center bg-azure-radiance-500 hover:bg-azure-radiance-600 focus:bg-azure-radiance-700 text-white disabled:bg-azure-radiance-300"
 
 export default function Pagination({ data, updatePage }: IPagination) {
 
@@ -23,17 +23,13 @@ export default function Pagination({ data, updatePage }: IPagination) {
       </div>
 
       <div className="flex items-center gap-2 h-[2rem] justify-center w-full">
-        {
-          (pages > 0 && current > 1)
-          && (
-            <button 
-              className={btnClass}
-              onClick={() => updatePage(prev => prev-1)}
-            >
-              <BiChevronLeft/>
-            </button>
-          )
-        }
+        <button 
+          className={btnClass}
+          onClick={() => updatePage(prev => prev-1)}
+          disabled={pages == 0 || current == 1}
+        >
+          <BiChevronLeft/>
+        </button>
 
         <div className="flex gap-2">
           <input 
@@ -51,17 +47,13 @@ export default function Pagination({ data, updatePage }: IPagination) {
           />
         </div>
 
-        {
-          (pages > 0 && current !== Math.round(pages))
-          && (
-            <button 
-              className={btnClass}
-              onClick={() => updatePage(prev => prev+1)}
-            >
-              <BiChevronRight/>
-            </button>
-          )
-        }
+        <button 
+          className={btnClass}
+          onClick={() => updatePage(prev => prev+1)}
+          disabled={pages == (0 || 1) || current == Math.round(pages)}
+        >
+          <BiChevronRight/>
+        </button>
       </div>
     </div>
   )

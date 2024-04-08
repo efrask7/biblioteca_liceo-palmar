@@ -25,7 +25,7 @@ export default function RootLayout() {
     <ProviderLayout>
       <div className="flex flex-col size-full">
         <header 
-          className="bg-slate-800 min-h-10 flex justify-between items-center px-2 sticky top-0 z-[1000] w-full"
+          className="bg-head min-h-10 flex justify-between text-white items-center px-2 sticky top-0 z-[1000] w-full"
           onDoubleClick={() => window.windowAct.maximize()}
         >
           <Logo/>

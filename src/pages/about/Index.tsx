@@ -1,7 +1,7 @@
 export default function AboutIndex() {
   return (
     <div>
-      about
+      v0.1.0-beta
     </div>
   )
 }

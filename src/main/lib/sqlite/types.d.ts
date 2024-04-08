@@ -41,3 +41,16 @@ interface IBookEditRes extends APIResponse {
 interface IBookAddRes extends APIResponse {
   data: IBookDB
 }
+
+interface IBookSQDB {
+  id: number
+  title: string
+  author: string 
+  book_date: string
+  observations: string
+  orderBk: string
+  origin: string
+  publisher: string
+  quantity: string
+  volume: string
+}
