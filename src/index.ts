@@ -3,7 +3,7 @@ import readExcel from './main/lib/excel/readExcel';
 import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/sqlite/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
 import { addNewRentBook, editRentStatus, removeRent } from './main/lib/sqlite/bookrent.controller';
-import updateApp from "update-electron-app"
+import { updateElectronApp } from "update-electron-app"
 import { createDatabase, getTableCount } from './main/lib/sqlite/db.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -165,7 +165,7 @@ const createWindow = (): void => {
 
 app.on('ready', () => {
   createWindow()
-  updateApp.updateElectronApp({
+  updateElectronApp({
     updateInterval: "1 hour",
     notifyUser: true,
     logger: require('electron-log')
