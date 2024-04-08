@@ -3,12 +3,11 @@ import readExcel from './main/lib/excel/readExcel';
 import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/sqlite/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
 import { addNewRentBook, editRentStatus, removeRent } from './main/lib/sqlite/bookrent.controller';
-import { updateElectronApp } from "update-electron-app"
+import updateApp from "update-electron-app"
 import { createDatabase, getTableCount } from './main/lib/sqlite/db.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
-updateElectronApp()
 createDatabase()
 
 if (require('electron-squirrel-startup')) {
@@ -164,7 +163,14 @@ const createWindow = (): void => {
   })
 };
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow()
+  updateApp.updateElectronApp({
+    updateInterval: "1 hour",
+    notifyUser: true,
+    logger: require('electron-log')
+  })
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

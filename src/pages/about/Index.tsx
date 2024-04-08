@@ -1,7 +1,7 @@
 export default function AboutIndex() {
   return (
     <div>
-      v0.1.0-beta
+      v0.2.1-beta
     </div>
   )
 }
