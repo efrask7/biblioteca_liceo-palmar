@@ -51,9 +51,9 @@ export default function ModalMsg({ open, close, title, message, onClose, onClose
           {
             Icon
             && 
-            <Icon className="mx-auto mb-4 size-14 text-gray-300" />
+            <Icon className="mx-auto mb-4 size-14 text-slate-700" />
           }
-          <h3 className="mb-5 text-lg font-normal text-gray-200">
+          <h3 className="mb-5 text-lg font-normal text-black">
             {
               message
             }

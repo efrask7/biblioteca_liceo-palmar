@@ -28,6 +28,7 @@ const createWindow = (): void => {
       nodeIntegration: true,
       nodeIntegrationInWorker: true
     },
+    icon: './static/img/logo_win.ico'
   });
   
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

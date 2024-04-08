@@ -42,7 +42,7 @@ export default function BooksManageID() {
       ...prev,
       ...data.book
     }))
-    setBookRentData(data.rented)
+    setBookRentData(data.rented || [])
     setModalRent(prev => ({
       ...prev,
       bookId: data.book.id,

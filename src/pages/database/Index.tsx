@@ -1,7 +1,7 @@
 import { Button, Tooltip } from "flowbite-react";
 import { useCallback, useEffect, useState } from "react";
 import { HiCheckCircle, HiExclamationCircle, HiXCircle } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useModal } from "../../context/ModalContext";
 
 export default function DBIndex() {
@@ -13,6 +13,7 @@ export default function DBIndex() {
   })
 
   const { modal, option } = useModal()
+  const router = useNavigate()
 
   const [submitting, setSubmitting] = useState(false)
   
@@ -25,19 +26,33 @@ export default function DBIndex() {
   const onFileReturn = useCallback((result: APIResponse) => {
     console.log(result)
     if (result.error) {
-      setStatus({
-        show: true,
-        success: false,
-        error: result.error
+      // setStatus({
+      //   show: true,
+      //   success: false,
+      //   error: result.error
+      // })
+      modal.open({
+        message: "No se pudo importar la base de datos",
+        Icon: HiXCircle,
       })
+
       return
     }
-  
-    setStatus({
-      show: true,
-      success: true,
-      error: null
+
+    modal.open({
+      message: "Se importo la base de datos",
+      Icon: HiCheckCircle,
+      btnOptional: {
+        label: "Ver listado",
+        onClick: () => router("/books/search")
+      }
     })
+  
+    // setStatus({
+    //   show: true,
+    //   success: true,
+    //   error: null
+    // })
   }, [])
 
   const handleDeleteDB = useCallback((result: APIResponse) => {
@@ -102,7 +117,7 @@ export default function DBIndex() {
           Eliminar base de datos
         </Button>
       </div>
-      <div>
+      {/* <div>
         {
           status.show
           && (
@@ -133,7 +148,7 @@ export default function DBIndex() {
             </div>
           )
         }
-      </div>
+      </div> */}
     </div>
   )
 }

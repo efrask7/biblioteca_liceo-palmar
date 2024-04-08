@@ -39,13 +39,13 @@ export default function RentTable({ data }: IRentTable) {
             tableHeaders.map((header, i) => (
               <Table.HeadCell
                 key={i}
-                className="text-base"
+                className="text-base bg-headgreen"
               >
                 {header}
               </Table.HeadCell>
             ))
           }
-          <Table.HeadCell>
+          <Table.HeadCell className="text-base bg-headgreen">
             Acciones
           </Table.HeadCell>
         </Table.Head>
@@ -70,11 +70,11 @@ export default function RentTable({ data }: IRentTable) {
               }
 
               return (
-                <Table.Row key={i} className="text-gray-200">
-                  <Table.Cell>{rent.name}</Table.Cell>
+                <Table.Row key={i} className="text-black">
+                  <Table.Cell className="font-bold">{rent.name}</Table.Cell>
                   <Table.Cell>{startDate}</Table.Cell>
                   <Table.Cell
-                    className={`${rent.status === "rented" ? "text-emerald-400" : "text-gray-300"}`}
+                    className={`${rent.status === "rented" ? "text-emerald-700" : "text-black"}`}
                   >
                     {statusName[rent.status]}
                   </Table.Cell>

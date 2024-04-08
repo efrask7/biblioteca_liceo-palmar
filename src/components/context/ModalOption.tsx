@@ -10,7 +10,7 @@ export interface IModalOptionsProps {
   Icon?: IconType
 }
 
-const iconClass = "mx-auto mb-4 size-14 text-gray-300"
+const iconClass = "mx-auto mb-4 size-14 text-slate-700"
 
 export interface IModalOption extends IModalProps, IModalOptionsProps {}
 
@@ -27,7 +27,7 @@ export default function ModalOption({ open, close, message, optionYesLabel, onAc
             ? <Icon className={iconClass}/>
             : <HiOutlineExclamationCircle className={iconClass}/>
           }
-          <h3 className="mb-5 text-lg font-normal text-gray-200">
+          <h3 className="mb-5 text-lg font-normal text-black">
             {
               message
             }

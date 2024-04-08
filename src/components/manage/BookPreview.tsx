@@ -11,6 +11,8 @@ interface IBookPreview {
   setEditMode: Dispatch<SetStateAction<boolean>>
 }
 
+const DEFAULT_CLASS = "font-bold text-base"
+
 export default function BookPreview({ data, editMode, setEditMode }: IBookPreview) {
 
   const router = useNavigate()
@@ -56,7 +58,7 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
   }
 
   const useLabelColor = useCallback(() => {
-    return editMode ? "text-emerald-400 dark:text-emerald-400" : "text-gray-200 dark:text-gray-200"
+    return editMode ? `${DEFAULT_CLASS} text-slate-800 italic` : `${DEFAULT_CLASS} text-black`
   }, [editMode])
 
   const handleSubmit = useCallback((ev: FormEvent) => {
@@ -68,7 +70,7 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
 
     const data: {[x: string]: any} = {}
 
-    Object.keys(bookData).forEach((key, i, arr) => {
+    Object.keys(bookData).forEach((key) => {
       if (key === "id") return
       data[key] = bookData[key as keyof typeof bookData]
     })
@@ -160,9 +162,9 @@ export default function BookPreview({ data, editMode, setEditMode }: IBookPrevie
         )
       }
 
-      <div className="p-2 rounded-lg border w-3/4">
+      <div className="p-2 rounded-lg border border-azure-radiance-500 w-3/4 bg-azure-radiance-400 text-black">
         <div>
-          <div><Label value="ID" htmlFor="bp_id"/></div>
+          <div><Label value="ID" htmlFor="bp_id" className={`${DEFAULT_CLASS} text-black`}/></div>
           <TextInput value={bookData.id} readOnly/>
         </div>
 
