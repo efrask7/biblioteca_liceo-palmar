@@ -1,7 +1,9 @@
+import SettingsCustomization from "../../components/settings/Customization";
+
 export default function SettingsIndex() {
   return (
     <div>
-      settings
+      <SettingsCustomization/>
     </div>
   )
 }

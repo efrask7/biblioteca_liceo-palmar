@@ -1,10 +1,13 @@
 import { PropsWithChildren } from "react";
 import { ModalProvider } from "../context/ModalContext";
+import { ThemeProvider } from "../context/ThemeContext";
 
 export default function ProviderLayout({ children }: PropsWithChildren) {
   return (
-    <ModalProvider>
-      {children}
-    </ModalProvider>
+    <ThemeProvider>
+      <ModalProvider>
+        {children}
+      </ModalProvider>
+    </ThemeProvider>
   )
 }
