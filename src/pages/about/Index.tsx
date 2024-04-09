@@ -1,7 +1,9 @@
+import { APP_VERSION } from "../../utils/info"
+
 export default function AboutIndex() {
   return (
     <div>
-      v0.1.0-beta
+      {APP_VERSION}
     </div>
   )
 }

@@ -8,7 +8,6 @@ import { createDatabase, getTableCount } from './main/lib/sqlite/db.controller';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
-updateElectronApp()
 createDatabase()
 
 if (require('electron-squirrel-startup')) {
@@ -144,6 +143,10 @@ const createWindow = (): void => {
 
     const deleted = await deleteBook(id)
 
+    if (deleted.error) {
+      mainWindow.webContents.send("log:error", deleted)
+    }
+
     mainWindow.webContents.send("books:delete", deleted)
   })
 
@@ -164,7 +167,14 @@ const createWindow = (): void => {
   })
 };
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow()
+  updateElectronApp({
+    updateInterval: "1 hour",
+    notifyUser: true,
+    logger: require('electron-log')
+  })
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

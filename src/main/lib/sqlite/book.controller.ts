@@ -234,10 +234,12 @@ export async function deleteBook(id: number) {
     if (isNaN(id)) throw "El id no es valido"
 
     const db = getDB()
+
+    const rentCount = (db.prepare("SELECT count(id) FROM BookRent WHERE book = ?").get(id) as { 'count(id)': number })['count(id)']
     
     const rentStmt = db.prepare("DELETE FROM BookRent WHERE book = ?").run(id)
     
-    if (rentStmt.changes === 0 && (getTableCount("BookRent") !== 0)) throw "No se pudieron eliminar los registros del libro"
+    if (rentStmt.changes === 0 && (rentCount > 0)) throw "No se pudieron eliminar los registros del libro"
 
     const stmt = db.prepare("DELETE FROM Books WHERE id = ?")
     const res = stmt.run(id)

@@ -16,8 +16,10 @@ const config: ForgeConfig = {
     asar: true,
     icon: './src/static/img/logo_win',
     extraResource: [
-      "./src/static/img/logo_win.ico"
-    ]
+      "./src/static/img/logo_win.ico",
+      "./src/static/img/logo.png",
+    ],
+    executableName: 'biblioteca_liceo-palmar'
   },
   rebuildConfig: {},
   makers: [new MakerSquirrel({
@@ -25,7 +27,16 @@ const config: ForgeConfig = {
     description: 'Biblioteca Liceo Palmar',
     setupIcon: './src/static/img/logo_win.ico',
     iconUrl: 'https://efrask7.github.io/biblioteca_liceo-palmar/logo_win.ico'
-  }), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  }),
+  new MakerDeb({
+    options: {
+      maintainer: 'efrask7',
+      homepage: 'https://github.com/efrask7/biblioteca_liceo-palmar',
+      categories: ['Education', 'Office'],
+      description: 'Biblioteca de liceo Palmar',
+      icon: './src/static/img/logo.png'
+    }
+  })],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
