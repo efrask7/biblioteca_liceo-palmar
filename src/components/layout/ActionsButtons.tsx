@@ -2,6 +2,7 @@ import { ITitleBarThemes } from "../themes/titlebar/types";
 import TitlebarWindows from "../themes/titlebar/Windows";
 import TitlebarKubuntu from "../themes/titlebar/Kubuntu";
 import { useTheme } from "../../context/ThemeContext";
+import TitlebarUbuntu from "../themes/titlebar/Ubuntu";
 
 export type TAction = "minimize" | "maximize" | "close"
 
@@ -24,7 +25,8 @@ export default function ActionsButtons({ maximized }: IActionsButtons) {
 
   const UseThemes: ITitleBarThemes = {
     Windows: <TitlebarWindows buttons={btnActions} maximized={maximized} />,
-    Kubuntu: <TitlebarKubuntu buttons={btnActions} maximized={maximized}/>
+    Kubuntu: <TitlebarKubuntu buttons={btnActions} maximized={maximized}/>,
+    Ubuntu: <TitlebarUbuntu buttons={btnActions} maximized={maximized}/>
   }
   
   return (

@@ -14,7 +14,8 @@ interface ITitleBarBtnProps {
 
 type TTitleBarThemes = 
   "Windows" |
-  "Kubuntu"
+  "Kubuntu" |
+  "Ubuntu"
 
 type ITitleBarThemes = {
   [key in TTitleBarThemes]: ReactNode
@@ -22,7 +23,8 @@ type ITitleBarThemes = {
 
 enum ETitleBarThemes {
   Windows = "Windows",
-  Kubuntu = "Kubuntu"
+  Kubuntu = "Kubuntu",
+  Ubuntu = "Ubuntu"
 }
 
 export type { ITitleBarBtnProps, ITitleBarProps, TTitleBarThemes, ITitleBarThemes }
