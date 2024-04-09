@@ -60,13 +60,13 @@ export default function RentTable({ data }: IRentTable) {
               }
               
               const startObj = new Date(rent.startDate)
-              const startDate = `${startObj.getDay()}/${startObj.getMonth()}/${startObj.getFullYear()} Hora (${startObj.getHours()}:${startObj.getMinutes()}:${startObj.getSeconds()})`
+              const startDate = `${startObj.getDate()}/${startObj.getMonth()+1}/${startObj.getFullYear()} Hora (${startObj.getHours()}:${startObj.getMinutes()}:${startObj.getSeconds()})`
 
               let endDate = "-"
 
               if (rent.endDate) {
                 const endObj = new Date(rent.endDate)
-                endDate = `${endObj.getDay()}/${endObj.getMonth()}/${endObj.getFullYear()} Hora (${endObj.getHours()}:${endObj.getMinutes()}:${endObj.getSeconds()})`
+                endDate = `${endObj.getDate()}/${endObj.getMonth()+1}/${endObj.getFullYear()} Hora (${endObj.getHours()}:${endObj.getMinutes()}:${endObj.getSeconds()})`
               }
 
               return (
