@@ -1,7 +1,7 @@
 {
   "name": "biblioteca_liceo-palmar",
   "productName": "Biblioteca Palmar",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Administrador de Biblioteca Palmar",
   "main": ".webpack/main",
   "scripts": {

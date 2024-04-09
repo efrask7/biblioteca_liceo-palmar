@@ -47,8 +47,10 @@ export async function addNewRentBook(id: number, name: string) {
 
     const db = getDB()
 
-    const stmt = db.prepare("INSERT INTO BookRent (book, name, status) VALUES (?,?,?)")
-    const res = stmt.run(id, name, "rented")
+    const stmt = db.prepare("INSERT INTO BookRent (book, name, status, startDate) VALUES (?,?,?,?)")
+    const res = stmt.run(id, name, "rented", `${new Date()}`)
+
+    console.log("New rent at", new Date())
 
     if (res.changes === 0) throw "No se pudo agregar el registro"
 
@@ -59,6 +61,7 @@ export async function addNewRentBook(id: number, name: string) {
       data
     }
   } catch (error) {
+    console.log(error)
     return {
       error
     }
