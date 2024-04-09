@@ -1,14 +1,15 @@
 import { ITitleBarBtnProps, ITitleBarProps } from "./types";
 import { BiChevronDown, BiChevronUp, BiRectangle } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
+import { GoDiamond } from "react-icons/go"
 
 function Btn({ children, action, buttons }: ITitleBarBtnProps) {
   return (
     <button 
       className={
         `
-          p-1 rounded-full flex items-center justify-center text-2xl
-          ${action === "close" ? "hover:bg-red-600" : "hover:bg-slate-400"}
+          size-6 mx-2 rounded-full flex items-center justify-center text-base hover:text-black
+          ${action === "close" ? "hover:bg-red-600" : "hover:bg-white"}
         `
       }
       onClick={() => buttons[action]()}
@@ -26,7 +27,11 @@ export default function TitlebarKubuntu({ buttons, maximized }: ITitleBarProps) 
     </Btn>
 
     <Btn action="maximize" buttons={buttons}>
-      <BiChevronUp/>
+      {
+        maximized
+          ? <GoDiamond/>
+          : <BiChevronUp/>
+      }
     </Btn>
 
     <Btn action="close" buttons={buttons}>
