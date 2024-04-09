@@ -143,6 +143,10 @@ const createWindow = (): void => {
 
     const deleted = await deleteBook(id)
 
+    if (deleted.error) {
+      mainWindow.webContents.send("log:error", deleted)
+    }
+
     mainWindow.webContents.send("books:delete", deleted)
   })
 

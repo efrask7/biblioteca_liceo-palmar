@@ -53,3 +53,5 @@ contextBridge.exposeInMainWorld("rent", {
 contextBridge.exposeInMainWorld("testfunc", {
   test: () => ipcRenderer.invoke("test")
 })
+
+ipcRenderer.on("log:error", (_, data) => console.log(data))
