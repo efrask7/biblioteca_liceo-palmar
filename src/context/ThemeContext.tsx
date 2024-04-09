@@ -25,6 +25,11 @@ function ThemeProvider({children}: PropsWithChildren) {
 
     if (titleBarLS) {
       setThemeSelected(titleBarLS as TTitleBarThemes)
+    } else {
+      if (window.navigator.userAgent.includes("Linux")) {
+        setThemeSelected("Ubuntu")
+        setIntoLocalStorage("titlebar", "Ubuntu")
+      }
     }
   }, [])
 
