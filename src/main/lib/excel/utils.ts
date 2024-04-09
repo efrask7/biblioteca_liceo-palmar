@@ -17,7 +17,7 @@ export function fixExcelJson(excelJson: TExcelJson[]) {
     return newValJson
   })
 
-  console.log(excelMapped)
+  // console.log(excelMapped)
 
   const excel = excelMapped.slice(2)
 

@@ -20,6 +20,6 @@ export default function readExcel(path: string) {
 
   const excel = fixExcelJson(excelJSON)
 
-  console.log(excel)
+  // console.log(excel)
   return excel
 }

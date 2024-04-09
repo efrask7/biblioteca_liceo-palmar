@@ -2,6 +2,7 @@ import { isJsonNull } from "../excel/utils";
 import Database from "better-sqlite3";
 import { getDB, getTableCount } from "./db.controller";
 import { dBParamsFixed, fixBookDBJson } from "./utils/fixedDBParams";
+import { dbPath } from "./utils/getDBPath";
 
 export async function importExcel(books: IBook[]) {
   // const excel = await prisma.$transaction(async (db) => {
@@ -31,9 +32,7 @@ export async function importExcel(books: IBook[]) {
   //   success: true
   // }
   try {
-    const db = new Database("bib.db", {
-      fileMustExist: true
-    })
+    const db = getDB()
 
     const insert = db.prepare('INSERT INTO Books (title, author, orderBk, volume, publisher, book_date, origin, observations, quantity) VALUES (@titulo, @autor, @orden, @volumen, @editorial, @fecha, @origen, @observaciones, @cantidad)')
 

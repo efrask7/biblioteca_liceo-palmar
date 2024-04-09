@@ -1,4 +1,5 @@
 import Database, { Database as DBType } from "better-sqlite3"
+import { createDBPath, dbPath } from "./utils/getDBPath"
 
 const QUERY_TABLE_BOOKS = `
   CREATE TABLE IF NOT EXISTS Books (
@@ -31,7 +32,9 @@ export async function createDatabase() {
   try {
     console.log("Creating database if not exists")
 
-    const db = new Database("bib.db", {
+    await createDBPath()
+
+    const db = new Database(`${dbPath}/bib.db`, {
       fileMustExist: false
     })
 
@@ -56,7 +59,7 @@ export async function createDatabase() {
 
 export function getDB(): DBType {
   try {
-    const db = new Database("bib.db", {
+    const db = new Database(`${dbPath}/bib.db`, {
       fileMustExist: true
     })
 
@@ -70,9 +73,7 @@ export async function beginTransactionDB(query: string, data: any[]): Promise<{s
   return new Promise((resolve, reject) => {
     try {
 
-      const db = new Database("bib.db", {
-        fileMustExist: true
-      })
+      const db = getDB()
 
       const insert = db.prepare(query)
 
