@@ -5,6 +5,7 @@ import { IRentData } from './pages/books/RentBookModal';
 import { addNewRentBook, editRentStatus, removeRent } from './main/lib/sqlite/bookrent.controller';
 import { updateElectronApp } from "update-electron-app"
 import { createDatabase, getTableCount } from './main/lib/sqlite/db.controller';
+import getUpdateInfo from './main/updater/getUpdateInfo';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -14,7 +15,7 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const createWindow = (): void => {
+const createWindow = async () => {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
@@ -164,6 +165,15 @@ const createWindow = (): void => {
     const deleted = await deleteAllData()
 
     mainWindow.webContents.send("file:delete", deleted)
+  })
+
+  ipcMain.handle("update:getdata", async () => {
+    console.log("Invoked get update data")
+    const data = await getUpdateInfo()
+
+    console.log(data)
+
+    mainWindow.webContents.send("update:getdata", data)
   })
 };
 

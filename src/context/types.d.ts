@@ -17,3 +17,8 @@ interface IThemeContext {
     select: (theme: TTitleBarThemes) => void
   }
 }
+
+interface IUpdateContext {
+  getData: () => void
+  updateData: IUpdateData
+}
