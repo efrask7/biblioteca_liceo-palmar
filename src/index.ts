@@ -167,13 +167,13 @@ const createWindow = async () => {
     mainWindow.webContents.send("file:delete", deleted)
   })
 
-  ipcMain.handle("update:getdata", async () => {
+  ipcMain.handle("updater:getData", async () => {
     console.log("Invoked get update data")
     const data = await getUpdateInfo()
 
     console.log(data)
 
-    mainWindow.webContents.send("update:getdata", data)
+    mainWindow.webContents.send("updater:getData", data)
   })
 };
 

@@ -62,6 +62,11 @@ declare global {
       handleDeleteRent: (callback: (result: APIResponse) => void) => void
       closeHandleDeleteRent: () => void
     }
+    updater: {
+      getData: () => void
+      handleGetData: (callback: (data: IUpdateData) => void) => void
+      closeHandleGetData: () => void
+    }
   }
 }
 

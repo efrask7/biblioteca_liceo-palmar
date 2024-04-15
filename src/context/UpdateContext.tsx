@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useState } from "react";
 import { IUpdateContext } from "./types";
 
 const DEFAULT_DATA: IUpdateData = {
@@ -28,9 +28,23 @@ function UpdateProvider({ children }: PropsWithChildren) {
   
   const [data, setData] = useState<IUpdateData>(DEFAULT_DATA)
   
-  function getData() {
+  const getData = useCallback(() => {
+    window.updater.getData()
+  }, [])
 
-  }
+  const updateData = useCallback((data: IUpdateData) => {
+    setData(data)
+  }, [])
+
+  useEffect(() => {
+    window.updater.handleGetData(updateData)
+
+    return () => window.updater.closeHandleGetData()
+  }, [getData])
+
+  useEffect(() => {
+    getData()
+  }, [getData])
 
   return (
     <UpdateContext.Provider
@@ -43,3 +57,5 @@ function UpdateProvider({ children }: PropsWithChildren) {
     </UpdateContext.Provider>
   )
 }
+
+export { useUpdate, UpdateProvider }

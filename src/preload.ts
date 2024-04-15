@@ -50,6 +50,12 @@ contextBridge.exposeInMainWorld("rent", {
   closeHandleDeleteRent: () => ipcRenderer.off("rent:remove", () => {})
 })
 
+contextBridge.exposeInMainWorld("updater", {
+  getData: () => ipcRenderer.invoke("updater:getData"),
+  handleGetData: (callback: (data: IUpdateData) => void) => ipcRenderer.on("updater:getData", (_, data: IUpdateData) => callback(data)) ,
+  closeHandleGetData: () => ipcRenderer.off("updater:getData", () => {}),
+})
+
 contextBridge.exposeInMainWorld("testfunc", {
   test: () => ipcRenderer.invoke("test")
 })
