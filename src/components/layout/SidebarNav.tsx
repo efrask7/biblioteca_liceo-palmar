@@ -2,7 +2,9 @@ import { Sidebar } from "flowbite-react";
 import { useCallback, useState } from "react";
 import { IconType } from "react-icons";
 import { BiEdit, BiInfoCircle, BiPlus, BiSearch } from "react-icons/bi";
+import { GoClock } from "react-icons/go";
 import { MdHouse, MdLibraryBooks, MdMenu } from "react-icons/md";
+import { LuBookUp } from "react-icons/lu"
 import { VscDatabase, VscGear } from "react-icons/vsc";
 import { useNavigate, useNavigation } from "react-router-dom";
 
@@ -68,6 +70,7 @@ export default function SidebarNav() {
           <Sidebar.Collapse icon={MdLibraryBooks} label="Libros">
             <RenderLink label="Buscar" to="/books/search" icon={BiSearch}/>
             <RenderLink label="Agregar" to="/books/manage" icon={BiPlus}/>
+            <RenderLink label="Prestados" to="/books/rented" icon={LuBookUp}/>
           </Sidebar.Collapse>
 
           <RenderLink label="Base de datos" to="/database" icon={VscDatabase}/>
@@ -81,6 +84,7 @@ export default function SidebarNav() {
               <RenderLink label="Ajustes" to="/settings" icon={VscGear}/>
             )
           }
+          <RenderLink label="Cambios" to="/changelog" icon={GoClock}/>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

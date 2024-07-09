@@ -10,6 +10,15 @@ export interface IBooksResult {
   }
 }
 
+export interface IBooksRentedResult {
+  data: IBookRentWithData[]
+  pagination: {
+    count: number
+    pages: number
+    current: number
+  }
+}
+
 export interface IBookByIdResult {
   data: {
     book: IBookDB,
@@ -61,6 +70,14 @@ declare global {
       deleteRent: (id: number) => void
       handleDeleteRent: (callback: (result: APIResponse) => void) => void
       closeHandleDeleteRent: () => void
+      getAll: (page: number) => void
+      handleGetAll: (callback: (result: IBooksRentedResult) => void) => void
+      closeHandleGetAll: () => void
+    }
+    updater: {
+      getData: () => void
+      handleGetData: (callback: (data: IUpdateData) => void) => void
+      closeHandleGetData: () => void
     }
   }
 }

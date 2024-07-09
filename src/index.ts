@@ -1,10 +1,11 @@
-import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, Notification } from 'electron';
 import readExcel from './main/lib/excel/readExcel';
 import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/sqlite/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
-import { addNewRentBook, editRentStatus, removeRent } from './main/lib/sqlite/bookrent.controller';
+import { addNewRentBook, editRentStatus, getAllRents, removeRent } from './main/lib/sqlite/bookrent.controller';
 import { updateElectronApp } from "update-electron-app"
 import { createDatabase, getTableCount } from './main/lib/sqlite/db.controller';
+import getUpdateInfo from './main/updater/getUpdateInfo';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -14,7 +15,7 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const createWindow = (): void => {
+const createWindow = async () => {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
@@ -164,6 +165,24 @@ const createWindow = (): void => {
     const deleted = await deleteAllData()
 
     mainWindow.webContents.send("file:delete", deleted)
+  })
+
+  ipcMain.handle("updater:getData", async () => {
+    console.log("Invoked get update data")
+    const data = await getUpdateInfo()
+
+    console.log(data)
+
+    mainWindow.webContents.send("updater:getData", data)
+  })
+
+  ipcMain.handle("rent:getAllData", async (_, page: number) => {
+    console.log("Invoked get all rent data")
+    const data = await getAllRents(page)
+
+    console.log(data)
+
+    mainWindow.webContents.send("rent:getAllData", data)
   })
 };
 

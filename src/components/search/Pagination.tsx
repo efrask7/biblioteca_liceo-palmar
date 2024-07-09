@@ -42,7 +42,7 @@ export default function Pagination({ data, updatePage }: IPagination) {
           <input 
             type="number"
             readOnly
-            value={Math.round(pages)}
+            value={Math.ceil(pages) < 1 ? 1 : Math.ceil(pages)}
             className={inputClass}
           />
         </div>
@@ -50,7 +50,7 @@ export default function Pagination({ data, updatePage }: IPagination) {
         <button 
           className={btnClass}
           onClick={() => updatePage(prev => prev+1)}
-          disabled={pages == (0 || 1) || current == Math.round(pages)}
+          disabled={(pages >= 0 && pages <= 1) || current == Math.ceil(pages)}
         >
           <BiChevronRight/>
         </button>

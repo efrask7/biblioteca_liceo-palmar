@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { IBookByIdResult } from "../../interface"
 import { MdArrowCircleLeft } from "react-icons/md"
 import { Button } from "flowbite-react"
@@ -9,6 +9,8 @@ import RentBookModal from "./RentBookModal"
 import RentTable from "../../components/manage/RentTable"
 
 export default function BooksManageID() {
+
+  const navigate = useNavigate()
 
   const { id } = useParams()
   
@@ -95,12 +97,12 @@ export default function BooksManageID() {
           &&
           (
             <>
-            <Link
+            <button
               className="text-lg"
-              to="/books/search"
+              onClick={() => navigate(-1)}
             >
               <MdArrowCircleLeft className="size-12"/>
-            </Link>
+            </button>
 
             <Button
               color="success"
