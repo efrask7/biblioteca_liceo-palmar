@@ -24,3 +24,7 @@ interface IBookRent {
   startDate: Date
   endDate?: Date
 }
+
+interface IBookRentWithData extends IBookRent {
+  title?: string
+}

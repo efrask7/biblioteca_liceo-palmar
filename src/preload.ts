@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { Dispatch, SetStateAction } from "react";
-import { IBookByIdResult, IBooksResult } from "./interface";
+import { IBookByIdResult, IBooksRentedResult, IBooksResult } from "./interface";
 import { IRentData } from "./pages/books/RentBookModal";
 
 contextBridge.exposeInMainWorld("windowAct", {
@@ -47,7 +47,10 @@ contextBridge.exposeInMainWorld("rent", {
   closeHandleEditRent: () => ipcRenderer.off("rent:edit", () => {}),
   deleteRent: (id: number) => ipcRenderer.invoke("rent:remove", id),
   handleDeleteRent: (callback: (result: APIResponse) => void) => ipcRenderer.on("rent:remove", (_, data: APIResponse) => callback(data)),
-  closeHandleDeleteRent: () => ipcRenderer.off("rent:remove", () => {})
+  closeHandleDeleteRent: () => ipcRenderer.off("rent:remove", () => {}),
+  getAll: (page: number) => ipcRenderer.invoke("rent:getAllData", page),
+  handleGetAll: (callback: (result: IBooksRentedResult) => void) => ipcRenderer.on("rent:getAllData", (_, data: IBooksRentedResult) => callback(data)),
+  closeHandleGetAll: () => ipcRenderer.off("rent:getAllData", () => {})
 })
 
 contextBridge.exposeInMainWorld("updater", {

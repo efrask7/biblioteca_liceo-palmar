@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain, dialog, Notification } from 'electron';
 import readExcel from './main/lib/excel/readExcel';
 import { addBook, deleteAllData, deleteBook, getBookById, getBooks, importExcel, updateBook } from './main/lib/sqlite/book.controller';
 import { IRentData } from './pages/books/RentBookModal';
-import { addNewRentBook, editRentStatus, removeRent } from './main/lib/sqlite/bookrent.controller';
+import { addNewRentBook, editRentStatus, getAllRents, removeRent } from './main/lib/sqlite/bookrent.controller';
 import { updateElectronApp } from "update-electron-app"
 import { createDatabase, getTableCount } from './main/lib/sqlite/db.controller';
 import getUpdateInfo from './main/updater/getUpdateInfo';
@@ -174,6 +174,15 @@ const createWindow = async () => {
     console.log(data)
 
     mainWindow.webContents.send("updater:getData", data)
+  })
+
+  ipcMain.handle("rent:getAllData", async (_, page: number) => {
+    console.log("Invoked get all rent data")
+    const data = await getAllRents(page)
+
+    console.log(data)
+
+    mainWindow.webContents.send("rent:getAllData", data)
   })
 };
 

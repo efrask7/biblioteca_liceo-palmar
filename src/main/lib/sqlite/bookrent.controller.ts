@@ -155,3 +155,28 @@ export async function removeRent(id: number) {
     }
   }
 }
+
+export async function getAllRents(page: number) {
+  try {
+    const db = getDB()
+
+    const count = db.prepare("SELECT * FROM BookRent BR JOIN Books B ON BR.book = B.id WHERE BR.status <> 'returned'").all().length
+    const allCount = count / 10
+
+    const stmt = db.prepare("SELECT BR.*, B.title FROM BookRent BR JOIN Books B ON BR.book = B.id WHERE BR.status <> 'returned' ORDER BY BR.id DESC LIMIT 10 OFFSET ?")
+    const res = stmt.all((page-1) * 10) as IBookRentWithData[]
+    
+    return {
+      data: res,
+      pagination: {
+        count,
+        pages: allCount,
+        current: page
+      }
+    }
+  } catch (error) {
+    return {
+      error
+    }
+  }
+}

@@ -8,6 +8,7 @@ import AboutIndex from "../pages/about/Index";
 import SettingsIndex from "../pages/settings/Index";
 import BooksManageID from "../pages/books/ManageID";
 import ChangelogIndex from "../pages/changelog/Index";
+import BooksSearchRented from "../pages/books/Rented";
 
 const routesElements = createRoutesFromElements(
   <Route path="/" element={<RootLayout/>}>
@@ -20,6 +21,8 @@ const routesElements = createRoutesFromElements(
 
         <Route path=":id" element={<BooksManageID/>}/>
       </Route>
+
+      <Route path="rented" element={<BooksSearchRented/>} />
     </Route>
 
     <Route path="database">
