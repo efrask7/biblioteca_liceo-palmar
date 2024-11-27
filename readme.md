@@ -69,6 +69,21 @@ Este proyecto es una aplicación de escritorio para gestionar la biblioteca del 
 - Auto actualización de la aplicación en Windows.
 - Ver los cambios de nuevas versiones en la aplicación.
 
+### To-Do
+- Agregar la opción de exportar los datos de los libros a un archivo Excel.
+- Customizar el formato de los archivos Excel al importar o exportar.
+- Customizar la apariencia de la aplicación.
+- Agregar algun modo para auto actualizar la aplicación en Linux.
+- Tener la posibilidad de usar un modo cloud para almacenar los datos de la aplicación via web.
+- Autenticación de usuarios.
+- Agregar la opción de agregar usuarios y roles.
+- Agregar la opción de agregar categorías a los libros.
+- Agregar la opción de generar reportes y estadísticas de préstamos.
+- Implementar un sistema de notificaciones para préstamos vencidos.
+- Agregar un sistema de backup y restauración de la base de datos.
+- Implementar un historial de acciones realizadas en la aplicación.
+- Agregar soporte para códigos de barras o QR para identificar libros.
+
 ### Contribución
 
 Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request para discutir cualquier cambio que desees realizar.
